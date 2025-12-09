@@ -159,7 +159,7 @@ header p {
   background: var(--accent-color);
   color: #000;
   border-color: var(--accent-color);
-  box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 15px rgba(238, 112, 9, 0.4);
 }
 
 /* Tab Content */
