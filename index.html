@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alsol L1 Helper</title>
+
+    <link rel="shortcut icon" href="./unnamed.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +22,8 @@
 
     <div class="container">
         <header>
-            <h1>Alsol L1 [BETA]</h1>
-            <p>Gerador de ordem de serviço</p>
+            <h1>Alsol L1 Support</h1>
+            <p>Gerador de Notas Rápido</p>
         </header>
 
         <div class="tabs">
@@ -117,6 +119,21 @@
                     <div class="input-group full-width">
                         <label>Sinal Médio da CTO (dBm)</label>
                         <input type="text" id="fibra-sinal" placeholder="-20.50">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Diagnóstico / Problema Principal</label>
+                        <select id="fibra-diagnostico">
+                            <option value="">Selecione...</option>
+                            <option value="lentidao">1) Lentidão</option>
+                            <option value="sem_conexao">2) Sem conexão</option>
+                            <option value="oscilacao">3) Oscilação / Intermitência</option>
+                            <option value="queda">4) Queda constante</option>
+                            <option value="wifi">5) Wi-Fi fraco</option>
+                            <option value="roteador">6) Problema no roteador</option>
+                            <option value="sinal_optico">7) Sinal óptico baixo / problema na fibra</option>
+                            <option value="sites">8) Alguns sites não abrem</option>
+                        </select>
                     </div>
 
                     <div class="input-group full-width">

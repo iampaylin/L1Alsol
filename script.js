@@ -1,3 +1,63 @@
+// Solutions Data
+const SOLUTIONS = {
+    'lentidao': [
+        'Verificar integridade da fibra até a ONU (dobras, esmagamentos, rompimentos).',
+        'Revisar conectores, fusões e possíveis microdobras.',
+        'Testar navegação diretamente pelo cabo conectado na ONU.',
+        'Medir potência óptica na ONU e no conector externo.',
+        'Verificar se o roteador do cliente está defeituoso, superaquecendo ou com fonte instável.',
+        'Substituir cabo de rede danificado.',
+        'Reconfigurar ou substituir roteador, se necessário.'
+    ],
+    'sem_conexao': [
+        'Testar sinal óptico na CTO e na fibra do cliente.',
+        'Verificar fusões, conectores e eventual rompimento.',
+        'Testar outra ONU e substituir se necessário.',
+        'Testar com outro roteador para confirmar funcionamento.',
+        'Verificar cabeamento interno do cliente (cabo UTP, tomadas, emendas).'
+    ],
+    'oscilacao': [
+        'Medir potência da fibra e corrigir se estiver fora do ideal.',
+        'Testar estabilidade conectando um dispositivo diretamente na ONU.',
+        'Verificar interferências no ambiente do roteador (micro-ondas, paredes, eletrodomésticos).',
+        'Reposicionar corretamente o roteador.',
+        'Substituir roteador com problema de queda de Wi-Fi ou instabilidade.'
+    ],
+    'queda': [
+        'Checar superaquecimento físico da ONU ou roteador.',
+        'Verificar fonte, cabo de energia e tomadas frouxas.',
+        'Revisar cabos internos e conectores.',
+        'Testar roteador e ONU com equipamento de teste próprio.',
+        'Substituir equipamentos defeituosos.'
+    ],
+    'wifi': [
+        'Avaliar posição do roteador e realocar para melhor cobertura.',
+        'Verificar barreiras físicas que reduzem sinal.',
+        'Testar repetidores ou Mesh caso o cliente use.',
+        'Verificar antenas e possíveis danos físicos ao roteador.',
+        'Trocar roteador se a potência de transmissão estiver comprometida.'
+    ],
+    'roteador': [
+        'Testar equipamento com outro roteador para confirmar falha.',
+        'Verificar superaquecimento, LEDs anormais e ruídos.',
+        'Conferir fonte e substituir se houver instabilidade.',
+        'Substituir roteador se confirmado defeito.'
+    ],
+    'sinal_optico': [
+        'Testar potência óptica na CTO e na fibra interna.',
+        'Recolocar ou substituir conectores.',
+        'Corrigir microdobras ou refazer trechos danificados.',
+        'Refazer fusão se necessário.',
+        'Verificar se há rompimento parcial no cabo interno ou externo.'
+    ],
+    'sites': [
+        '(AÇÕES PARA TÉCNICO PRESENCIAL)',
+        'Testar navegação com notebook próprio na residência.',
+        'Confirmar se o roteador apresenta problemas de DNS ou travamento quando sob carga.',
+        'Substituir roteador se apresentar travamentos locais.'
+    ]
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Tab Switching Logic
@@ -69,15 +129,24 @@ function maskPhone(value) {
 }
 
 function maskSignal(value) {
-    // Allow numbers, minus sign, and dot
-    let v = value.replace(/[^\d.-]/g, '');
+    // Remove non-numeric characters
+    let v = value.replace(/\D/g, '');
 
-    // Ensure only one minus at the start
-    if (v.indexOf('-') > 0) {
-        v = v.replace(/-/g, '');
+    // Logic: 
+    // If length <= 2, just show negative number (e.g. 2 -> -2, 22 -> -22)
+    // If length > 2, put dot before last 2 digits (e.g. 225 -> -2.25, 2250 -> -22.50)
+
+    if (v.length === 0) return '';
+
+    if (v.length <= 2) {
+        return `-${v}`;
+    } else {
+        const integerPart = v.slice(0, v.length - 2);
+        const decimalPart = v.slice(v.length - 2);
+        // Remove leading zeros from integer part if valuable (optional, but '08' -> '8')
+        // But for signal usually it's fine.
+        return `-${Number(integerPart)}.${decimalPart}`;
     }
-
-    return v;
 }
 
 function clearForm() {
@@ -148,6 +217,7 @@ function generateFibraNote() {
     const equipDesligando = getRadioValue('fibra-equip-desligando');
     const sinalCTO = getValue('fibra-sinal');
     const sinalCliente = getValue('fibra-sinal-cliente');
+    const diagnostico = getValue('fibra-diagnostico');
     const problema = getValue('fibra-problema');
     const resumoExtra = getValue('fibra-resumo');
 
@@ -168,7 +238,15 @@ function generateFibraNote() {
         resumoFinal += (resumoFinal ? '\n\n' : '') + `⚠️ ${resumoExtra}`;
     }
 
-    return `
+    // Solutions Block
+    let solucoesBlock = '';
+    if (diagnostico && SOLUTIONS[diagnostico]) {
+        const title = document.querySelector(`#fibra-diagnostico option[value="${diagnostico}"]`).textContent;
+        const actions = SOLUTIONS[diagnostico].map(a => `- ${a}`).join('\n');
+        solucoesBlock = `\n\n--- AÇÕES PARA TÉCNICO (${title.toUpperCase()}) ---\n${actions}`;
+    }
+
+    return `Fibra:
 NOME DO SOLICITANTE: ${nome}
 CONTATO CLIENTE: ${contato}
 TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
@@ -185,7 +263,7 @@ Problema:
 ${problema}
 
 * Nível 1 *
-${resumoFinal}`;
+${resumoFinal}${solucoesBlock}`;
 }
 
 function generateRadioNote() {
