@@ -231,6 +231,10 @@ function generateFibraNote() {
         const alarmesTexto = alarmes === 'SIM' ? 'Constam alarmes' : 'Sem alarmes';
         checklistItems.push(`+ Alarmes (${alarmesTexto})`);
     }
+    if (getCheckboxState('contato')) checklistItems.push('+ Tentativa de contato realizada');
+    if (getCheckboxState('LINKLOSS')) checklistItems.push('+ Verificado alarme LINK LOSS');
+    if (getCheckboxState('RXLOWPOWER')) checklistItems.push('+ Verificado alarme RX LOW POWER');
+    if (getCheckboxState('DYINGGASP')) checklistItems.push('+ Verificado alarme DYING GASP');
 
     // Combine checklist with extra summary text
     let resumoFinal = checklistItems.join('\n');
@@ -246,8 +250,7 @@ function generateFibraNote() {
         solucoesBlock = `\n\n--- AÇÕES PARA TÉCNICO (${title.toUpperCase()}) ---\n${actions}`;
     }
 
-    return `Fibra:
-NOME DO SOLICITANTE: ${nome}
+    return `NOME DO SOLICITANTE: ${nome}
 CONTATO CLIENTE: ${contato}
 TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
 STATUS DA CONEXÃO: ${formatRadioOption(status, ['ONLINE', 'OFFLINE'])}
@@ -286,8 +289,7 @@ function generateRadioNote() {
         resumoFinal += (resumoFinal ? '\n\n' : '') + `⚠️ ${resumoExtra}`;
     }
 
-    return `Rádio:
-NOME DO SOLICITANTE: ${nome}
+    return `NOME DO SOLICITANTE: ${nome}
 CONTATO CLIENTE: ${contato}
 TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
 STATUS DA CONEXÃO: ${formatRadioOption(status, ['ONLINE', 'OFFLINE'])}
