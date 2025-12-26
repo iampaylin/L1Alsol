@@ -4,26 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alsol L1 Helper</title>
+    <title>Alsol L1 - Gerar ordem de serviço</title>
 
-    <link rel="shortcut icon" href="./unnamed.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./logoalsol.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="background-globes">
-        <div class="globe globe-1"></div>
-        <div class="globe globe-2"></div>
-        <div class="globe globe-3"></div>
-    </div>
 
     <div class="container">
         <header>
-            <h1>Alsol L1 Support</h1>
-            <p>Gerador de Notas Rápido</p>
+            <h1>Alsol L1</h1>
         </header>
 
         <div class="tabs">
@@ -48,7 +43,6 @@
                         <label>Tipo de Conexão</label>
                         <div class="radio-group" id="fibra-tipo">
                             <label><input type="radio" name="fibra-tipo" value="FTTH" checked> FTTH</label>
-                            <label><input type="radio" name="fibra-tipo" value="WIRELESS"> Wireless</label>
                             <label><input type="radio" name="fibra-tipo" value="SERVIÇO DE TV"> Serviço de TV</label>
                         </div>
                     </div>
@@ -87,15 +81,6 @@
                         </div>
                     </div>
 
-                    <div class="input-group full-width">
-                        <label>Tipos de alarmes</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" id="LINKLOSS"> LINK LOSS</label>
-                            <label><input type="checkbox" id="RXLOWPOWER"> RX LOW POWER</label>
-                            <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
-                        </div>
-                    </div>
-
                     <div class="input-group">
                         <label>Equipamentos Desligando?</label>
                         <div class="radio-group" id="fibra-equip-desligando">
@@ -120,6 +105,15 @@
                         </div>
                     </div>
 
+                    <div class="input-group">
+                        <label>Tipos de alarmes</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="LINKLOSS"> LINK LOSS</label>
+                            <label><input type="checkbox" id="RXLOWPOWER"> RX LOW POWER</label>
+                            <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
+                        </div>
+                    </div>
+
                     <div class="input-group full-width">
                         <label>Sinal do Cliente (dBm)</label>
                         <input type="text" id="fibra-sinal-cliente" placeholder="-22.00">
@@ -134,14 +128,13 @@
                         <label>Diagnóstico / Problema Principal</label>
                         <select id="fibra-diagnostico">
                             <option value="">Selecione...</option>
-                            <option value="lentidao">1) Lentidão</option>
-                            <option value="sem_conexao">2) Sem conexão</option>
-                            <option value="oscilacao">3) Oscilação / Intermitência</option>
-                            <option value="queda">4) Queda constante</option>
-                            <option value="wifi">5) Wi-Fi fraco</option>
-                            <option value="roteador">6) Problema no roteador</option>
-                            <option value="sinal_optico">7) Sinal óptico baixo / problema na fibra</option>
-                            <option value="sites">8) Alguns sites não abrem</option>
+                            <option value="lentidao">Lentidão</option>
+                            <option value="sem_conexao">Sem conexão</option>
+                            <option value="oscilacao">Oscilação / Intermitência</option>
+                            <option value="queda">Queda constante</option>
+                            <option value="roteador">Problema no roteador</option>
+                            <option value="sinal_optico">Sinal óptico baixo / problema na fibra</option>
+                            <!-- <option value="sites">8) Alguns sites não abrem</option> -->
                         </select>
                     </div>
 
@@ -159,6 +152,8 @@
                             <label><input type="checkbox" id="fibra-check-doc"> Verificado documentação</label>
                             <label><input type="checkbox" id="fibra-check-sinal"> Verificado sinal</label>
                             <label><input type="checkbox" id="fibra-check-alarmes"> Verificado alarmes</label>
+                            <label><input type="checkbox" id="fibra-check-temperatura"> Verificado temperatura da
+                                ONU</label>
                             <label><input type="checkbox" id="contato"> Tentativa de contato realizada</label>
                         </div>
                         <br>
@@ -182,7 +177,6 @@
                     <div class="input-group full-width">
                         <label>Tipo de Conexão</label>
                         <div class="radio-group" id="radio-tipo">
-                            <label><input type="radio" name="radio-tipo" value="FTTH"> FTTH</label>
                             <label><input type="radio" name="radio-tipo" value="WIRELESS" checked> Wireless</label>
                             <label><input type="radio" name="radio-tipo" value="SERVIÇO DE TV"> Serviço de TV</label>
                         </div>

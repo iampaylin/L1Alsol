@@ -20,22 +20,12 @@ const SOLUTIONS = {
         'Medir potência da fibra e corrigir se estiver fora do ideal.',
         'Testar estabilidade conectando um dispositivo diretamente na ONU.',
         'Verificar interferências no ambiente do roteador (micro-ondas, paredes, eletrodomésticos).',
-        'Reposicionar corretamente o roteador.',
         'Substituir roteador com problema de queda de Wi-Fi ou instabilidade.'
     ],
     'queda': [
-        'Checar superaquecimento físico da ONU ou roteador.',
         'Verificar fonte, cabo de energia e tomadas frouxas.',
         'Revisar cabos internos e conectores.',
-        'Testar roteador e ONU com equipamento de teste próprio.',
         'Substituir equipamentos defeituosos.'
-    ],
-    'wifi': [
-        'Avaliar posição do roteador e realocar para melhor cobertura.',
-        'Verificar barreiras físicas que reduzem sinal.',
-        'Testar repetidores ou Mesh caso o cliente use.',
-        'Verificar antenas e possíveis danos físicos ao roteador.',
-        'Trocar roteador se a potência de transmissão estiver comprometida.'
     ],
     'roteador': [
         'Testar equipamento com outro roteador para confirmar falha.',
@@ -50,12 +40,6 @@ const SOLUTIONS = {
         'Refazer fusão se necessário.',
         'Verificar se há rompimento parcial no cabo interno ou externo.'
     ],
-    'sites': [
-        '(AÇÕES PARA TÉCNICO PRESENCIAL)',
-        'Testar navegação com notebook próprio na residência.',
-        'Confirmar se o roteador apresenta problemas de DNS ou travamento quando sob carga.',
-        'Substituir roteador se apresentar travamentos locais.'
-    ]
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -229,17 +213,15 @@ function generateFibraNote() {
     if (getCheckboxState('fibra-check-sinal')) checklistItems.push(`+ Verificado sinal do cliente (${sinalCliente ? sinalCliente + 'dBm' : 'N/A'})`);
     if (getCheckboxState('fibra-check-alarmes')) {
         const alarmesTexto = alarmes === 'SIM' ? 'Constam alarmes' : 'Sem alarmes';
-        checklistItems.push(`+ Alarmes (${alarmesTexto})`);
+        checklistItems.push(`+ Alarmes (${alarmesTexto} ` + (getCheckboxState('LINKLOSS') ? 'LINK LOSS ' : '') + (getCheckboxState('RXLOWPOWER') ? 'RX LOW POWER ' : '') + (getCheckboxState('DYINGGASP') ? 'DYING GASP' : '') + ')');
     }
     if (getCheckboxState('contato')) checklistItems.push('+ Tentativa de contato realizada');
-    if (getCheckboxState('LINKLOSS')) checklistItems.push('+ Verificado alarme LINK LOSS');
-    if (getCheckboxState('RXLOWPOWER')) checklistItems.push('+ Verificado alarme RX LOW POWER');
-    if (getCheckboxState('DYINGGASP')) checklistItems.push('+ Verificado alarme DYING GASP');
+    if (getCheckboxState('fibra-check-temperatura')) checklistItems.push('+ Verificado temperatura da ONU');
 
-    // Combine checklist with extra summary text
+    // Combine checklist with extra summary text 
     let resumoFinal = checklistItems.join('\n');
     if (resumoExtra) {
-        resumoFinal += (resumoFinal ? '\n\n' : '') + `⚠️ ${resumoExtra}`;
+        resumoFinal += (resumoFinal ? '\n\n' : '') + ` ${resumoExtra}`;
     }
 
     // Solutions Block
@@ -286,7 +268,7 @@ function generateRadioNote() {
 
     let resumoFinal = checklistItems.join('\n');
     if (resumoExtra) {
-        resumoFinal += (resumoFinal ? '\n\n' : '') + `⚠️ ${resumoExtra}`;
+        resumoFinal += (resumoFinal ? '\n\n' : '') + ` ${resumoExtra}`;
     }
 
     return `NOME DO SOLICITANTE: ${nome}
