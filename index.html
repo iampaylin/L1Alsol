@@ -18,7 +18,7 @@
 
     <div class="container">
         <header>
-            <h1>Alsol L1</h1>
+            <h1>Ordem de serviço</h1>
         </header>
 
         <div class="tabs">
@@ -39,7 +39,7 @@
                         <input type="text" id="fibra-contato" placeholder="(XX) XXXXX-XXXX">
                     </div>
 
-                    <div class="input-group full-width">
+                    <div class="input-group">
                         <label>Tipo de Conexão</label>
                         <div class="radio-group" id="fibra-tipo">
                             <label><input type="radio" name="fibra-tipo" value="FTTH" checked> FTTH</label>
@@ -47,13 +47,29 @@
                         </div>
                     </div>
 
-                    <div class="input-group full-width">
+                    <div class="input-group">
                         <label>Status da Conexão</label>
                         <div class="radio-group" id="fibra-status">
                             <label class="status-online"><input type="radio" name="fibra-status" value="ONLINE" checked>
                                 Online</label>
                             <label class="status-offline"><input type="radio" name="fibra-status" value="OFFLINE">
                                 Offline</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Atualizou o endereço?</label>
+                        <div class="radio-group" id="end-doc">
+                            <label><input type="radio" name="end-doc" value="SIM" checked> Sim</label>
+                            <label><input type="radio" name="end-doc" value="NÃO"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Atualizou o contato?</label>
+                        <div class="radio-group" id="cont-doc">
+                            <label><input type="radio" name="cont-doc" value="SIM" checked> Sim</label>
+                            <label><input type="radio" name="cont-doc" value="NÃO"> Não</label>
                         </div>
                     </div>
 
@@ -74,14 +90,6 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Alarmes na ONU/Antena?</label>
-                        <div class="radio-group" id="fibra-alarmes">
-                            <label><input type="radio" name="fibra-alarmes" value="SIM"> Sim</label>
-                            <label><input type="radio" name="fibra-alarmes" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
                         <label>Equipamentos Desligando?</label>
                         <div class="radio-group" id="fibra-equip-desligando">
                             <label><input type="radio" name="fibra-equip-desligando" value="SIM"> Sim</label>
@@ -94,6 +102,14 @@
                         <div class="radio-group" id="fibra-pppoe">
                             <label><input type="radio" name="fibra-pppoe" value="SIM"> Sim</label>
                             <label><input type="radio" name="fibra-pppoe" value="NÃO" checked> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Alarmes na ONU/Antena?</label>
+                        <div class="radio-group" id="fibra-alarmes">
+                            <label><input type="radio" name="fibra-alarmes" value="SIM"> Sim</label>
+                            <label><input type="radio" name="fibra-alarmes" value="NÃO" checked> Não</label>
                         </div>
                     </div>
 

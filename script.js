@@ -204,13 +204,15 @@ function generateFibraNote() {
     const diagnostico = getValue('fibra-diagnostico');
     const problema = getValue('fibra-problema');
     const resumoExtra = getValue('fibra-resumo');
+    const enderecoAtualizado = getRadioValue('end-doc');
+    const contatoAtualizado = getRadioValue('cont-doc');
 
     // Checklist Logic
     const checklistItems = [];
     if (getCheckboxState('fibra-check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
     if (getCheckboxState('fibra-check-config')) checklistItems.push('+ Configurado roteador no padrão Alsol');
     if (getCheckboxState('fibra-check-doc')) checklistItems.push('+ Verificado documentação do cliente');
-    if (getCheckboxState('fibra-check-sinal')) checklistItems.push(`+ Verificado sinal do cliente (${sinalCliente ? sinalCliente + 'dBm' : 'N/A'})`);
+    if (getCheckboxState('fibra-check-sinal')) checklistItems.push(`+ Sinal do cliente: ${sinalCliente ? sinalCliente + 'dBm' : 'N/A'} x CTO: ${sinalCTO ? sinalCTO + 'dBm' : 'N/A'})`);
     if (getCheckboxState('fibra-check-alarmes')) {
         const alarmesTexto = alarmes === 'SIM' ? 'Constam alarmes' : 'Sem alarmes';
         checklistItems.push(`+ Alarmes (${alarmesTexto} ` + (getCheckboxState('LINKLOSS') ? 'LINK LOSS ' : '') + (getCheckboxState('RXLOWPOWER') ? 'RX LOW POWER ' : '') + (getCheckboxState('DYINGGASP') ? 'DYING GASP' : '') + ')');
@@ -234,15 +236,20 @@ function generateFibraNote() {
 
     return `NOME DO SOLICITANTE: ${nome}
 CONTATO CLIENTE: ${contato}
+
 TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
 STATUS DA CONEXÃO: ${formatRadioOption(status, ['ONLINE', 'OFFLINE'])}
+
+ATUALIZOU O ENDEREÇO: ${formatRadioOption(enderecoAtualizado, ['SIM', 'NÃO'])}
+ATUALIZOU O CONTATO: ${formatRadioOption(contatoAtualizado, ['SIM', 'NÃO'])}
+
 POSSUI DOCUMENTAÇÃO: ${formatRadioOption(doc, ['SIM', 'NÃO'])}
 REMANEJAMENTO: ${formatRadioOption(remanejamento, ['SIM', 'NÃO'])}
+
 POSSUI ALARMES NA ONU/ANTENA: ${formatRadioOption(alarmes, ['SIM', 'NÃO'])}
 PERDE PACOTES PARA O PPPOE: ${formatRadioOption(pppoe, ['SIM', 'NÃO'])}
 PERDE PACOTES PARA HOSTS DO CLIENTE: ${formatRadioOption(hosts, ['SIM', 'NÃO'])}
 EQUIPAMENTOS DESLIGANDO: ${formatRadioOption(equipDesligando, ['SIM', 'NÃO'])}
-SINAL MÉDIO DA CTO: ${sinalCTO ? sinalCTO + 'dbm' : ''}
 
 Problema:
 ${problema}
@@ -250,6 +257,8 @@ ${problema}
 * Nível 1 *
 ${resumoFinal}${solucoesBlock}`;
 }
+
+// SINAL MÉDIO DA CTO: ${sinalCTO ? sinalCTO + 'dbm' : ''} | Removido
 
 function generateRadioNote() {
     const nome = getValue('radio-nome');
@@ -273,10 +282,13 @@ function generateRadioNote() {
 
     return `NOME DO SOLICITANTE: ${nome}
 CONTATO CLIENTE: ${contato}
+
 TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
 STATUS DA CONEXÃO: ${formatRadioOption(status, ['ONLINE', 'OFFLINE'])}
+
 CLIENTE RÁDIO VINCULADO: ${formatRadioOption(vinculado, ['SIM', 'NÃO'])}
 EQUIPAMENTOS DESLIGANDO: ${formatRadioOption(equipDesligando, ['SIM', 'NÃO'])}
+
 SINAL RADIO: ${sinal ? sinal + 'dbm' : ''}
 
 Problema:
