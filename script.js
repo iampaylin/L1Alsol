@@ -71,8 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('change', generateNote);
     });
 
-    const copyBtn = document.getElementById('copy-btn');
-    copyBtn.addEventListener('click', copyToClipboard);
+    const copyBtnPrimary = document.getElementById('copy-btn-primary');
+    copyBtnPrimary.addEventListener('click', () => copyToClipboard('output-text-primary', 'copy-btn-primary'));
+
+    const copyBtnSecondary = document.getElementById('copy-btn-secondary');
+    copyBtnSecondary.addEventListener('click', () => copyToClipboard('output-text-secondary', 'copy-btn-secondary'));
 
     const cleanBtn = document.getElementById('clean-btn');
     cleanBtn.addEventListener('click', clearForm);
@@ -185,7 +188,11 @@ function generateNote() {
         text = generateRadioNote();
     }
 
-    document.getElementById('output-text').textContent = text;
+    const secondaryText = generateSecondaryOutput(type);
+
+    // Separate outputs in different elements
+    document.getElementById('output-text-primary').textContent = text;
+    document.getElementById('output-text-secondary').textContent = secondaryText;
 }
 
 function generateFibraNote() {
@@ -298,6 +305,39 @@ ${problema}
 ${resumoFinal}`;
 }
 
+function generateSecondaryOutput(type) {
+    // Common fields
+    let msgCliente, nome, contato, endAtualizado, contAtualizado, relato;
+
+    if (type === 'fibra') {
+        msgCliente = getRadioValue('fibra-msg');
+        nome = getValue('fibra-nome');
+        contato = getValue('fibra-contato');
+        endAtualizado = getRadioValue('end-doc');
+        contAtualizado = getRadioValue('cont-doc');
+        relato = getValue('fibra-problema');
+    } else {
+        msgCliente = getRadioValue('radio-msg');
+        nome = getValue('radio-nome');
+        contato = getValue('radio-contato');
+        endAtualizado = getRadioValue('radio-end-doc');
+        contAtualizado = getRadioValue('radio-cont-doc');
+        relato = getValue('radio-problema');
+    }
+
+    return `
+Mensagem do cliente: ${formatRadioOption(msgCliente, ['SEM SERVIÇO', 'SERVIÇO COM INSTABILIDADE', 'OUTRO'])}
+
+NOME DO SOLICITANTE: ${nome}
+TELEFONE: ${contato}
+
+ENDEREÇO DO CADASTRO ESTÁ ATUALIZADO? ${formatRadioOption(endAtualizado, ['SIM', 'NÃO'])}
+TELEFONE DO CADASTRO ESTÁ ATUALIZADO? ${formatRadioOption(contAtualizado, ['SIM', 'NÃO'])}
+
+RELATO DO CLIENTE: 
+${relato}`;
+}
+
 // Helper to format the ( ) Option | ( ) Option style
 function formatRadioOption(selected, options) {
     return options.map(opt => {
@@ -306,14 +346,17 @@ function formatRadioOption(selected, options) {
     }).join(' | ');
 }
 
-function copyToClipboard() {
-    const text = document.getElementById('output-text').textContent;
+function copyToClipboard(elementId, buttonId) {
+    const text = document.getElementById(elementId).textContent;
     navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copy-btn');
+        const btn = document.getElementById(buttonId);
         const originalText = btn.textContent;
 
         btn.textContent = 'Copiado!';
         btn.style.backgroundColor = '#00ff88'; // Success green
+
+        // Ensure text color is readable if needed, though default usually fine
+        // btn.style.color = '#000'; 
 
         setTimeout(() => {
             btn.textContent = originalText;

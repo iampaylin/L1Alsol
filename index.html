@@ -30,6 +30,16 @@
             <!-- FIBRA FORM -->
             <section id="fibra" class="tab-content active">
                 <div class="form-grid">
+                    <div class="input-group full-width">
+                        <label>Mensagem do cliente</label>
+                        <div class="radio-group" id="fibra-msg">
+                            <label><input type="radio" name="fibra-msg" value="SEM SERVIÇO" checked> Sem Serviço</label>
+                            <label><input type="radio" name="fibra-msg" value="SERVIÇO COM INSTABILIDADE">
+                                Instabilidade</label>
+                            <label><input type="radio" name="fibra-msg" value="OUTRO"> Outro</label>
+                        </div>
+                    </div>
+
                     <div class="input-group">
                         <label>Nome do Solicitante</label>
                         <input type="text" id="fibra-nome" placeholder="Nome quem entrou em contato">
@@ -181,6 +191,16 @@
             <!-- RÁDIO FORM -->
             <section id="radio" class="tab-content">
                 <div class="form-grid">
+                    <div class="input-group full-width">
+                        <label>Mensagem do cliente</label>
+                        <div class="radio-group" id="radio-msg">
+                            <label><input type="radio" name="radio-msg" value="SEM SERVIÇO" checked> Sem Serviço</label>
+                            <label><input type="radio" name="radio-msg" value="SERVIÇO COM INSTABILIDADE">
+                                Instabilidade</label>
+                            <label><input type="radio" name="radio-msg" value="OUTRO"> Outro</label>
+                        </div>
+                    </div>
+
                     <div class="input-group">
                         <label>Nome do Solicitante</label>
                         <input type="text" id="radio-nome" placeholder="Nome quem entrou em contato">
@@ -205,6 +225,22 @@
                                 Online</label>
                             <label class="status-offline"><input type="radio" name="radio-status" value="OFFLINE">
                                 Offline</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Atualizou o endereço?</label>
+                        <div class="radio-group" id="radio-end-doc">
+                            <label><input type="radio" name="radio-end-doc" value="SIM" checked> Sim</label>
+                            <label><input type="radio" name="radio-end-doc" value="NÃO"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Atualizou o contato?</label>
+                        <div class="radio-group" id="radio-cont-doc">
+                            <label><input type="radio" name="radio-cont-doc" value="SIM" checked> Sim</label>
+                            <label><input type="radio" name="radio-cont-doc" value="NÃO"> Não</label>
                         </div>
                     </div>
 
@@ -247,15 +283,26 @@
 
             <!-- OUTPUT AREA -->
             <section class="output-section">
-                <h2>Nota Gerada</h2>
+                <h2>Nota Gerada (Principal)</h2>
                 <div class="output-container">
-                    <pre id="output-text"></pre>
+                    <pre id="output-text-primary"></pre>
                     <div class="action-buttons">
-                        <button id="clean-btn" class="secondary-btn">Limpar</button>
-                        <button id="copy-btn">Copiar Nota</button>
+                        <button id="copy-btn-primary" class="copy-btn">Copiar Nota Principal</button>
+                    </div>
+                </div>
+
+                <h2>Nota Gerada (Cliente)</h2>
+                <div class="output-container">
+                    <pre id="output-text-secondary"></pre>
+                    <div class="action-buttons">
+                        <button id="copy-btn-secondary" class="copy-btn">Copiar Nota Cliente</button>
                     </div>
                 </div>
             </section>
+
+            <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+                <button id="clean-btn" class="secondary-btn">Limpar Formulário</button>
+            </div>
 
         </main>
     </div>
