@@ -219,7 +219,7 @@ function generateFibraNote() {
     if (getCheckboxState('fibra-check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
     if (getCheckboxState('fibra-check-config')) checklistItems.push('+ Configurado roteador no padrão Alsol');
     if (getCheckboxState('fibra-check-doc')) checklistItems.push('+ Verificado documentação do cliente');
-    if (getCheckboxState('fibra-check-sinal')) checklistItems.push(`+ Sinal do cliente: ${sinalCliente ? sinalCliente + 'dBm' : 'N/A'} x CTO: ${sinalCTO ? sinalCTO + 'dBm' : 'N/A'})`);
+    //  if (getCheckboxState('fibra-check-sinal')) checklistItems.push(`+ Sinal do cliente: ${sinalCliente ? sinalCliente + 'dBm' : 'N/A'} x CTO: ${sinalCTO ? sinalCTO + 'dBm' : 'N/A'})`);
     if (getCheckboxState('fibra-check-alarmes')) {
         const alarmesTexto = alarmes === 'SIM' ? 'Constam alarmes' : 'Sem alarmes';
         checklistItems.push(`+ Alarmes (${alarmesTexto} ` + (getCheckboxState('LINKLOSS') ? 'LINK LOSS ' : '') + (getCheckboxState('RXLOWPOWER') ? 'RX LOW POWER ' : '') + (getCheckboxState('DYINGGASP') ? 'DYING GASP' : '') + ')');
@@ -238,31 +238,34 @@ function generateFibraNote() {
     if (diagnostico && SOLUTIONS[diagnostico]) {
         const title = document.querySelector(`#fibra-diagnostico option[value="${diagnostico}"]`).textContent;
         const actions = SOLUTIONS[diagnostico].map(a => `- ${a}`).join('\n');
-        solucoesBlock = `\n\n--- AÇÕES PARA TÉCNICO (${title.toUpperCase()}) ---\n${actions}`;
+        solucoesBlock = `\n\n[AÇÕES PARA TÉCNICO - ${title.toUpperCase()}] \n${actions}`;
     }
 
-    return `NOME DO SOLICITANTE: ${nome}
-CONTATO CLIENTE: ${contato}
+    // Get diagnostic label for header
+    let diagnosticoTexto = '';
+    const diagSelect = document.getElementById('fibra-diagnostico');
+    if (diagSelect && diagSelect.selectedIndex > 0) {
+        diagnosticoTexto = diagSelect.options[diagSelect.selectedIndex].text;
+    }
 
-TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
-STATUS DA CONEXÃO: ${formatRadioOption(status, ['ONLINE', 'OFFLINE'])}
+    return `[MOTIVO: ${diagnosticoTexto || 'NÃO INFORMADO'}]
 
-ATUALIZOU O ENDEREÇO: ${formatRadioOption(enderecoAtualizado, ['SIM', 'NÃO'])}
-ATUALIZOU O CONTATO: ${formatRadioOption(contatoAtualizado, ['SIM', 'NÃO'])}
+[DADOS CLIENTE]
+Solicitante: ${nome} | Contato: ${contato}
+Endereço Atualizado: ${enderecoAtualizado} | Contato Atualizado: ${contatoAtualizado}
+Documentação: ${doc}
 
-POSSUI DOCUMENTAÇÃO: ${formatRadioOption(doc, ['SIM', 'NÃO'])}
-REMANEJAMENTO: ${formatRadioOption(remanejamento, ['SIM', 'NÃO'])}
+[CONEXÃO]
+Tipo: ${tipo} (${status})
+Sinal Cliente: ${sinalCliente}dBm | CTO: ${sinalCTO}dBm
+Alarmes: ${alarmes} | Perde pacotes PPPoE: ${pppoe} | Perde pacotes Hosts: ${hosts}
+Equip. Desligando: ${equipDesligando} | Remanejamento: ${remanejamento}
 
-POSSUI ALARMES NA ONU/ANTENA: ${formatRadioOption(alarmes, ['SIM', 'NÃO'])}
-PERDE PACOTES PARA O PPPOE: ${formatRadioOption(pppoe, ['SIM', 'NÃO'])}
-PERDE PACOTES PARA HOSTS DO CLIENTE: ${formatRadioOption(hosts, ['SIM', 'NÃO'])}
-EQUIPAMENTOS DESLIGANDO: ${formatRadioOption(equipDesligando, ['SIM', 'NÃO'])}
-
-Problema:
+[PROBLEMA]
 ${problema}
 
-* Nível 1 *
-${resumoFinal}${solucoesBlock}`;
+[AÇÕES N1]
+${checklistItems.join('\n')}${solucoesBlock}`;
 }
 
 // SINAL MÉDIO DA CTO: ${sinalCTO ? sinalCTO + 'dbm' : ''} | Removido
@@ -287,22 +290,19 @@ function generateRadioNote() {
         resumoFinal += (resumoFinal ? '\n\n' : '') + ` ${resumoExtra}`;
     }
 
-    return `NOME DO SOLICITANTE: ${nome}
-CONTATO CLIENTE: ${contato}
+    return `[DADOS CLIENTE]
+Solicitante: ${nome} | Contato: ${contato}
 
-TIPO DE CONEXÃO: ${formatRadioOption(tipo, ['FTTH', 'WIRELESS', 'SERVIÇO DE TV'])}
-STATUS DA CONEXÃO: ${formatRadioOption(status, ['ONLINE', 'OFFLINE'])}
+[CONEXÃO]
+Tipo: ${tipo} (${status})
+Sinal Rádio: ${sinal ? sinal + 'dBm' : 'N/A'}
+Vinculado: ${vinculado} | Equip. Desligando: ${equipDesligando}
 
-CLIENTE RÁDIO VINCULADO: ${formatRadioOption(vinculado, ['SIM', 'NÃO'])}
-EQUIPAMENTOS DESLIGANDO: ${formatRadioOption(equipDesligando, ['SIM', 'NÃO'])}
-
-SINAL RADIO: ${sinal ? sinal + 'dbm' : ''}
-
-Problema:
+[PROBLEMA]
 ${problema}
 
-* Nível 1 *
-${resumoFinal}`;
+[AÇÕES N1]
+${checklistItems.join('\n')}`;
 }
 
 function generateSecondaryOutput(type) {
@@ -325,25 +325,16 @@ function generateSecondaryOutput(type) {
         relato = getValue('radio-problema');
     }
 
-    return `
-Mensagem do cliente: ${formatRadioOption(msgCliente, ['SEM SERVIÇO', 'SERVIÇO COM INSTABILIDADE', 'OUTRO'])}
+    return `Mensagem do cliente: ${msgCliente}
 
 NOME DO SOLICITANTE: ${nome}
 TELEFONE: ${contato}
 
-ENDEREÇO DO CADASTRO ESTÁ ATUALIZADO? ${formatRadioOption(endAtualizado, ['SIM', 'NÃO'])}
-TELEFONE DO CADASTRO ESTÁ ATUALIZADO? ${formatRadioOption(contAtualizado, ['SIM', 'NÃO'])}
+ENDEREÇO DO CADASTRO ESTÁ ATUALIZADO? ${endAtualizado}
+TELEFONE DO CADASTRO ESTÁ ATUALIZADO? ${contAtualizado}
 
 RELATO DO CLIENTE: 
 ${relato}`;
-}
-
-// Helper to format the ( ) Option | ( ) Option style
-function formatRadioOption(selected, options) {
-    return options.map(opt => {
-        const marker = opt === selected ? '( X )' : '(   )';
-        return `${marker} ${opt}`;
-    }).join(' | ');
 }
 
 function copyToClipboard(elementId, buttonId) {
@@ -354,6 +345,7 @@ function copyToClipboard(elementId, buttonId) {
 
         btn.textContent = 'Copiado!';
         btn.style.backgroundColor = '#00ff88'; // Success green
+        btn.style.color = '#000';
 
         // Ensure text color is readable if needed, though default usually fine
         // btn.style.color = '#000'; 
