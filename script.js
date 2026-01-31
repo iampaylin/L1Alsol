@@ -210,7 +210,6 @@ function generateFibraNote() {
     const sinalCliente = getValue('fibra-sinal-cliente');
     const diagnostico = getValue('fibra-diagnostico');
     const problema = getValue('fibra-problema');
-    const resumoExtra = getValue('fibra-resumo');
     const enderecoAtualizado = getRadioValue('end-doc');
     const contatoAtualizado = getRadioValue('cont-doc');
 
@@ -223,14 +222,6 @@ function generateFibraNote() {
     if (getCheckboxState('fibra-check-alarmes')) {
         const alarmesTexto = alarmes === 'SIM' ? 'Constam alarmes' : 'Sem alarmes';
         checklistItems.push(`+ Alarmes (${alarmesTexto} ` + (getCheckboxState('LINKLOSS') ? 'LINK LOSS ' : '') + (getCheckboxState('RXLOWPOWER') ? 'RX LOW POWER ' : '') + (getCheckboxState('DYINGGASP') ? 'DYING GASP' : '') + ')');
-    }
-    if (getCheckboxState('contato')) checklistItems.push('+ Tentativa de contato realizada');
-    if (getCheckboxState('fibra-check-temperatura')) checklistItems.push('+ Verificado temperatura da ONU');
-
-    // Combine checklist with extra summary text 
-    let resumoFinal = checklistItems.join('\n');
-    if (resumoExtra) {
-        resumoFinal += (resumoFinal ? '\n\n' : '') + ` ${resumoExtra}`;
     }
 
     // Solutions Block
@@ -264,7 +255,7 @@ Equip. Desligando: ${equipDesligando} | Remanejamento: ${remanejamento}
 [PROBLEMA]
 ${problema}
 
-[AÇÕES N1]
+[NÍVEL 1]
 ${checklistItems.join('\n')}${solucoesBlock}`;
 }
 
@@ -279,16 +270,10 @@ function generateRadioNote() {
     const equipDesligando = getRadioValue('radio-equip-desligando');
     const sinal = getValue('radio-sinal');
     const problema = getValue('radio-problema');
-    const resumoExtra = getValue('radio-resumo');
 
     // Checklist Logic
     const checklistItems = [];
     if (getCheckboxState('radio-check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
-
-    let resumoFinal = checklistItems.join('\n');
-    if (resumoExtra) {
-        resumoFinal += (resumoFinal ? '\n\n' : '') + ` ${resumoExtra}`;
-    }
 
     return `[DADOS CLIENTE]
 Solicitante: ${nome} | Contato: ${contato}
@@ -301,7 +286,7 @@ Vinculado: ${vinculado} | Equip. Desligando: ${equipDesligando}
 [PROBLEMA]
 ${problema}
 
-[AÇÕES N1]
+[NÍVEL 1]
 ${checklistItems.join('\n')}`;
 }
 

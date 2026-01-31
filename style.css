@@ -4,7 +4,7 @@
   --border-color: #060606;
   --text-primary: #ffffff;
   --text-secondary: #a0a0a0;
-  --accent-color: #a80000;
+  --accent-color: #548aae;
   --success-color: #00ff88;
   --danger-color: #ff4d4d;
   --glass-blur: blur(10px);
@@ -83,7 +83,7 @@ header p {
 }
 
 .tab-btn.active {
-  background: #a80000;
+  background: #548aae;
   color: #f5f5f5;
   border-color: var(--accent-color);
   box-shadow: 0 0 15px #00000066;
@@ -278,8 +278,8 @@ select option {
 }
 
 .secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--text-primary);
+  background: rgb(172, 9, 9);
+  color: #f5f5f5;
 }
 
 .copy-btn:hover {
