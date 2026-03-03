@@ -19,284 +19,211 @@
     <div class="container">
         <header>
             <h1>Ordem de serviço</h1>
+            <div class="stepper-header">
+                <div class="step-indicator active" data-step="1">1</div>
+                <div class="step-line"></div>
+                <div class="step-indicator" data-step="2">2</div>
+                <div class="step-line"></div>
+                <div class="step-indicator" data-step="3">3</div>
+                <div class="step-line"></div>
+                <div class="step-indicator" data-step="4">4</div>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="fibra">Fibra</button>
+                <button class="tab-btn" data-tab="radio">Rádio</button>
+            </div>
         </header>
 
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="fibra">Fibra</button>
-            <button class="tab-btn" data-tab="radio">Rádio</button>
-        </div>
-
         <main>
-            <!-- FIBRA FORM -->
-            <section id="fibra" class="tab-content active">
-                <div class="form-grid">
-                    <div class="input-group full-width">
-                        <label>Mensagem do cliente</label>
-                        <div class="radio-group" id="fibra-msg">
-                            <label><input type="radio" name="fibra-msg" value="SEM SERVIÇO" checked> Sem Serviço</label>
-                            <label><input type="radio" name="fibra-msg" value="SERVIÇO COM INSTABILIDADE">
-                                Instabilidade</label>
-                            <label><input type="radio" name="fibra-msg" value="OUTRO"> Outro</label>
+            <form id="os-form">
+                <!-- STEP 1: IDENTIFICAÇÃO -->
+                <div class="step active" id="step-1">
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label>Mensagem do cliente</label>
+                            <div class="radio-group-container">
+                                <!-- Fibra Msg -->
+                                <div class="radio-group type-fibra" id="fibra-msg">
+                                    <label><input type="radio" name="fibra-msg" value="SEM SERVIÇO" checked> Sem
+                                        Serviço</label>
+                                    <label><input type="radio" name="fibra-msg" value="SERVIÇO COM INSTABILIDADE">
+                                        Instabilidade</label>
+                                    <label><input type="radio" name="fibra-msg" value="OUTRO"> Outro</label>
+                                </div>
+                                <!-- Radio Msg -->
+                                <div class="radio-group type-radio" id="radio-msg" style="display: none;">
+                                    <label><input type="radio" name="radio-msg" value="SEM SERVIÇO" checked> Sem
+                                        Serviço</label>
+                                    <label><input type="radio" name="radio-msg" value="SERVIÇO COM INSTABILIDADE">
+                                        Instabilidade</label>
+                                    <label><input type="radio" name="radio-msg" value="OUTRO"> Outro</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group">
-                        <label>Nome do Solicitante</label>
-                        <input type="text" id="fibra-nome" placeholder="Nome quem entrou em contato">
-                    </div>
-                    <div class="input-group">
-                        <label>Contato Cliente</label>
-                        <input type="text" id="fibra-contato" placeholder="(XX) XXXXX-XXXX">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Tipo de Conexão</label>
-                        <div class="radio-group" id="fibra-tipo">
-                            <label><input type="radio" name="fibra-tipo" value="FTTH" checked> FTTH</label>
-                            <label><input type="radio" name="fibra-tipo" value="SERVIÇO DE TV"> Serviço de TV</label>
+                        <div class="input-group">
+                            <label>Nome do Solicitante</label>
+                            <input type="text" id="common-nome" placeholder="Nome do solicitante">
                         </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Status da Conexão</label>
-                        <div class="radio-group" id="fibra-status">
-                            <label class="status-online"><input type="radio" name="fibra-status" value="ONLINE" checked>
-                                Online</label>
-                            <label class="status-offline"><input type="radio" name="fibra-status" value="OFFLINE">
-                                Offline</label>
+                        <div class="input-group">
+                            <label>Contato Cliente</label>
+                            <input type="text" id="common-contato" placeholder="(XX) XXXXX-XXXX">
                         </div>
-                    </div>
 
-                    <div class="input-group">
-                        <label>Atualizou o endereço?</label>
-                        <div class="radio-group" id="end-doc">
-                            <label><input type="radio" name="end-doc" value="SIM" checked> Sim</label>
-                            <label><input type="radio" name="end-doc" value="NÃO"> Não</label>
+                        <div class="input-group">
+                            <label>Endereço Atualizado?</label>
+                            <div class="radio-group" id="end-doc">
+                                <label><input type="radio" name="end-doc" value="SIM" checked> Sim</label>
+                                <label><input type="radio" name="end-doc" value="NÃO"> Não</label>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Atualizou o contato?</label>
-                        <div class="radio-group" id="cont-doc">
-                            <label><input type="radio" name="cont-doc" value="SIM" checked> Sim</label>
-                            <label><input type="radio" name="cont-doc" value="NÃO"> Não</label>
+                        <div class="input-group">
+                            <label>Contato Atualizado?</label>
+                            <div class="radio-group" id="cont-doc">
+                                <label><input type="radio" name="cont-doc" value="SIM" checked> Sim</label>
+                                <label><input type="radio" name="cont-doc" value="NÃO"> Não</label>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Possui Documentação?</label>
-                        <div class="radio-group" id="fibra-doc">
-                            <label><input type="radio" name="fibra-doc" value="SIM" checked> Sim</label>
-                            <label><input type="radio" name="fibra-doc" value="NÃO"> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Remanejamento?</label>
-                        <div class="radio-group" id="fibra-remanejamento">
-                            <label><input type="radio" name="fibra-remanejamento" value="SIM"> Sim</label>
-                            <label><input type="radio" name="fibra-remanejamento" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Equipamentos Desligando?</label>
-                        <div class="radio-group" id="fibra-equip-desligando">
-                            <label><input type="radio" name="fibra-equip-desligando" value="SIM"> Sim</label>
-                            <label><input type="radio" name="fibra-equip-desligando" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Perde Pacotes PPPoE?</label>
-                        <div class="radio-group" id="fibra-pppoe">
-                            <label><input type="radio" name="fibra-pppoe" value="SIM"> Sim</label>
-                            <label><input type="radio" name="fibra-pppoe" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Perde Pacotes Hosts?</label>
-                        <div class="radio-group" id="fibra-hosts">
-                            <label><input type="radio" name="fibra-hosts" value="SIM"> Sim</label>
-                            <label><input type="radio" name="fibra-hosts" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Alarmes na ONU/Antena?</label>
-                        <div class="radio-group" id="fibra-alarmes">
-                            <label><input type="radio" name="fibra-alarmes" value="SIM"> Sim</label>
-                            <label><input type="radio" name="fibra-alarmes" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Sinal do Cliente (dBm)</label>
-                        <input type="text" id="fibra-sinal-cliente" placeholder="-22.00">
-
-                        <label>Sinal Médio da CTO (dBm)</label>
-                        <input type="text" id="fibra-sinal" placeholder="-20.50">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Tipos de alarmes</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" id="LINKLOSS"> LINK LOSS</label>
-                            <label><input type="checkbox" id="RXLOWPOWER"> RX LOW POWER</label>
-                            <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Diagnóstico / Problema Principal</label>
-                        <select id="fibra-diagnostico">
-                            <option value="">Selecione...</option>
-                            <option value="lentidao">Lentidão</option>
-                            <option value="sem_conexao">Sem conexão</option>
-                            <option value="oscilacao">Oscilação / Intermitência</option>
-                            <option value="queda">Queda constante</option>
-                            <option value="roteador">Problema no roteador</option>
-                            <option value="sinal_optico">Sinal óptico baixo / problema na fibra</option>
-                            <!-- <option value="sites">8) Alguns sites não abrem</option> -->
-                        </select>
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Problema Relatado</label>
-                        <textarea id="fibra-problema" rows="2" placeholder="Descreva o problema..."></textarea>
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Ações Realizadas</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" id="fibra-check-reiniciado"> Reiniciado equipamentos</label>
-                            <label><input type="checkbox" id="fibra-check-config"> Configurado roteador padrão
-                                Alsol</label>
-                            <label><input type="checkbox" id="fibra-check-doc"> Verificado documentação</label>
-                            <label><input type="checkbox" id="fibra-check-sinal"> Verificado sinal</label>
-                            <label><input type="checkbox" id="fibra-check-alarmes"> Verificado alarmes</label>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-            </section>
-
-            <!-- RÁDIO FORM -->
-            <section id="radio" class="tab-content">
-                <div class="form-grid">
-                    <div class="input-group full-width">
-                        <label>Mensagem do cliente</label>
-                        <div class="radio-group" id="radio-msg">
-                            <label><input type="radio" name="radio-msg" value="SEM SERVIÇO" checked> Sem Serviço</label>
-                            <label><input type="radio" name="radio-msg" value="SERVIÇO COM INSTABILIDADE">
-                                Instabilidade</label>
-                            <label><input type="radio" name="radio-msg" value="OUTRO"> Outro</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Nome do Solicitante</label>
-                        <input type="text" id="radio-nome" placeholder="Nome quem entrou em contato">
-                    </div>
-                    <div class="input-group">
-                        <label>Contato Cliente</label>
-                        <input type="text" id="radio-contato" placeholder="(XX) XXXXX-XXXX">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Tipo de Conexão</label>
-                        <div class="radio-group" id="radio-tipo">
-                            <label><input type="radio" name="radio-tipo" value="WIRELESS" checked> Wireless</label>
-                            <label><input type="radio" name="radio-tipo" value="SERVIÇO DE TV"> Serviço de TV</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Status da Conexão</label>
-                        <div class="radio-group" id="radio-status">
-                            <label class="status-online"><input type="radio" name="radio-status" value="ONLINE" checked>
-                                Online</label>
-                            <label class="status-offline"><input type="radio" name="radio-status" value="OFFLINE">
-                                Offline</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Atualizou o endereço?</label>
-                        <div class="radio-group" id="radio-end-doc">
-                            <label><input type="radio" name="radio-end-doc" value="SIM" checked> Sim</label>
-                            <label><input type="radio" name="radio-end-doc" value="NÃO"> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Atualizou o contato?</label>
-                        <div class="radio-group" id="radio-cont-doc">
-                            <label><input type="radio" name="radio-cont-doc" value="SIM" checked> Sim</label>
-                            <label><input type="radio" name="radio-cont-doc" value="NÃO"> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Cliente Rádio Vinculado?</label>
-                        <div class="radio-group" id="radio-vinculado">
-                            <label><input type="radio" name="radio-vinculado" value="SIM" checked> Sim</label>
-                            <label><input type="radio" name="radio-vinculado" value="NÃO"> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Equipamentos Desligando?</label>
-                        <div class="radio-group" id="radio-equip-desligando">
-                            <label><input type="radio" name="radio-equip-desligando" value="SIM"> Sim</label>
-                            <label><input type="radio" name="radio-equip-desligando" value="NÃO" checked> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Sinal Rádio (dBm)</label>
-                        <input type="text" id="radio-sinal" placeholder="-65.00">
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Problema Relatado</label>
-                        <textarea id="radio-problema" rows="2" placeholder="Descreva o problema..."></textarea>
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Ações Realizadas</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" id="radio-check-reiniciado"> Reiniciado equipamentos</label>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-            </section>
-
-            <!-- OUTPUT AREA -->
-            <section class="output-section">
-                <h2>Nota Gerada (Principal)</h2>
-                <div class="output-container">
-                    <pre id="output-text-primary"></pre>
-                    <div class="action-buttons">
-                        <button id="copy-btn-primary" class="copy-btn">Copiar Nota Principal</button>
                     </div>
                 </div>
 
-                <h2>Nota Gerada (Cliente)</h2>
-                <div class="output-container">
-                    <pre id="output-text-secondary"></pre>
-                    <div class="action-buttons">
-                        <button id="copy-btn-secondary" class="copy-btn">Copiar Nota Cliente</button>
+                <!-- STEP 2: DADOS TÉCNICOS -->
+                <div class="step" id="step-2">
+                    <!-- FIBRA DATA -->
+                    <div class="form-grid type-fibra">
+                        <div class="input-group">
+                            <label>Tipo de Conexão</label>
+                            <div class="radio-group" id="fibra-tipo">
+                                <label><input type="radio" name="fibra-tipo" value="FTTH" checked> FTTH</label>
+                                <label><input type="radio" name="fibra-tipo" value="SERVIÇO DE TV"> TV</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Status</label>
+                            <div class="radio-group" id="fibra-status">
+                                <label class="status-online"><input type="radio" name="fibra-status" value="ONLINE"
+                                        checked> Online</label>
+                                <label class="status-offline"><input type="radio" name="fibra-status" value="OFFLINE">
+                                    Offline</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Sinal Cliente (dBm)</label>
+                            <input type="text" id="fibra-sinal-cliente" placeholder="-22.00">
+                        </div>
+                        <div class="input-group">
+                            <label>Sinal CTO (dBm)</label>
+                            <input type="text" id="fibra-sinal" placeholder="-20.50">
+                        </div>
+                        <div class="input-group full-width">
+                            <label>Alarmes na ONU?</label>
+                            <div class="alarm-row">
+                                <div class="radio-group" id="fibra-alarmes">
+                                    <label><input type="radio" name="fibra-alarmes" value="SIM"> Sim</label>
+                                    <label><input type="radio" name="fibra-alarmes" value="NÃO" checked> Não</label>
+                                </div>
+                                <div class="checkbox-group horizontal" id="fibra-alarmes-types">
+                                    <label><input type="checkbox" id="LINKLOSS"> LINK LOSS</label>
+                                    <label><input type="checkbox" id="RXLOWPOWER"> RX LOW</label>
+                                    <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group full-width">
+                            <label>Diagnóstico Principal</label>
+                            <select id="fibra-diagnostico">
+                                <option value="">Selecione...</option>
+                                <option value="lentidao">Lentidão</option>
+                                <option value="sem_conexao">Sem conexão</option>
+                                <option value="oscilacao">Oscilação</option>
+                                <option value="queda">Queda constante</option>
+                                <option value="roteador">Problema no roteador</option>
+                                <option value="sinal_optico">Sinal óptico baixo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- RADIO DATA -->
+                    <div class="form-grid type-radio" style="display: none;">
+                        <div class="input-group">
+                            <label>Tipo de Conexão</label>
+                            <div class="radio-group" id="radio-tipo">
+                                <label><input type="radio" name="radio-tipo" value="WIRELESS" checked> Wireless</label>
+                                <label><input type="radio" name="radio-tipo" value="SERVIÇO DE TV"> TV</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Status</label>
+                            <div class="radio-group" id="radio-status">
+                                <label class="status-online"><input type="radio" name="radio-status" value="ONLINE"
+                                        checked> Online</label>
+                                <label class="status-offline"><input type="radio" name="radio-status" value="OFFLINE">
+                                    Offline</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Sinal Rádio (dBm)</label>
+                            <input type="text" id="radio-sinal" placeholder="-65.00">
+                        </div>
+                        <div class="input-group">
+                            <label>Vinculado?</label>
+                            <div class="radio-group" id="radio-vinculado">
+                                <label><input type="radio" name="radio-vinculado" value="SIM" checked> Sim</label>
+                                <label><input type="radio" name="radio-vinculado" value="NÃO"> Não</label>
+                            </div>
+                        </div>
+                        <div class="input-group full-width">
+                            <label>Diagnóstico Principal</label>
+                            <select id="radio-diagnostico">
+                                <option value="">Selecione...</option>
+                                <option value="radio_lento_oscilando">Lentidão / Oscilação</option>
+                                <option value="radio_sem_servico">Sem serviço / Queda</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
-                <button id="clean-btn" class="secondary-btn">Limpar Formulário</button>
-            </div>
+                <!-- STEP 3: FINALIZAÇÃO -->
+                <div class="step" id="step-3">
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label>Relato do Cliente</label>
+                            <textarea id="common-problema" rows="2" placeholder="Descreva o problema..."></textarea>
+                        </div>
+                        <div class="input-group full-width">
+                            <label>Ações Realizadas (Nível 1)</label>
+                            <div class="checkbox-group horizontal">
+                                <label><input type="checkbox" id="check-reiniciado"> Reiniciado equip.</label>
+                                <label><input type="checkbox" id="check-config"> Config. roteador</label>
+                                <label><input type="checkbox" id="check-doc"> Verif. documentação</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- STEP 4: RESULTADO -->
+                <div class="step" id="step-4">
+                    <section class="output-section" style="margin-top: 0;">
+                        <div class="output-container">
+                            <pre id="output-text-primary"></pre>
+                            <button type="button" id="copy-btn-primary" class="copy-btn">Copiar Nota</button>
+                        </div>
+                        <div class="output-container">
+                            <pre id="output-text-secondary"></pre>
+                            <button type="button" id="copy-btn-secondary" class="copy-btn">Copiar Cliente</button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- NAVIGATION -->
+                <div class="nav-buttons">
+                    <button type="button" id="prev-btn" class="secondary-btn"
+                        style="visibility: hidden;">Voltar</button>
+                    <button type="button" id="next-btn" class="copy-btn">Próximo</button>
+                    <button type="button" id="clean-btn" class="secondary-btn"
+                        style="margin-left: auto;">Limpar</button>
+                </div>
+            </form>
         </main>
     </div>
 

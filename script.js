@@ -40,28 +40,60 @@ const SOLUTIONS = {
         'Refazer fusão se necessário.',
         'Verificar se há rompimento parcial no cabo interno ou externo.'
     ],
+    // RADIO SOLUTIONS
+    'radio_lento_oscilando': [
+        'Revisar apontamento da antena (CCQ baixo).',
+        'Trocar o cabo de rede para teste.',
+        'Trocar a fonte de alimentação (POE).',
+        'Verificar se há obstruções novas (árvores, construções).'
+    ],
+    'radio_sem_servico': [
+        'Trocar a fonte de alimentação (POE).',
+        'Trocar o cabo de rede.',
+        'Testar com outro equipamento de rádio.',
+        'Verificar se a antena desconfigurou ou queimou.'
+    ],
 };
+
+let currentStep = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // Tab Switching Logic
     const tabs = document.querySelectorAll('.tab-btn');
-    const contents = document.querySelectorAll('.tab-content');
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Remove active class from all
             tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-
-            // Add active class to clicked
             tab.classList.add('active');
-            const targetId = tab.getAttribute('data-tab');
-            document.getElementById(targetId).classList.add('active');
 
-            // Trigger generation to update output immediately
+            const targetType = tab.getAttribute('data-tab');
+
+            // Toggle visibility of type-specific fields
+            document.querySelectorAll('.type-fibra').forEach(el => {
+                el.style.display = targetType === 'fibra' ? 'flex' : 'none';
+            });
+            document.querySelectorAll('.type-radio').forEach(el => {
+                el.style.display = targetType === 'radio' ? 'flex' : 'none';
+            });
+
+            // Reset stepper to step 1
+            showStep(1);
             generateNote();
         });
+    });
+
+    // Navigation Buttons
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentStep < 4) {
+            changeStep(1);
+        }
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentStep > 1) {
+            changeStep(-1);
+        }
     });
 
     // Event Listeners for Input Changes
@@ -83,27 +115,92 @@ document.addEventListener('DOMContentLoaded', () => {
     // Input Masking
     setupMasks();
 
-    // Initial Generation
+    // Make indicators clickable
+    const indicators = document.querySelectorAll('.step-indicator');
+    indicators.forEach((ind, idx) => {
+        ind.style.cursor = 'pointer';
+        ind.addEventListener('click', () => {
+            showStep(idx + 1);
+        });
+    });
+
+    // Initial State
+    showStep(1);
     generateNote();
 });
 
+function changeStep(n) {
+    const steps = document.querySelectorAll('.step');
+
+    // Basic validation before going to step 2/3
+    if (n > 0) {
+        if (currentStep === 1) {
+            const nome = document.getElementById('common-nome').value;
+            if (!nome) {
+                alert('Por favor, preencha o nome do solicitante.');
+                return;
+            }
+        }
+    }
+
+    currentStep += n;
+    showStep(currentStep);
+}
+
+function showStep(n) {
+    currentStep = n;
+    const steps = document.querySelectorAll('.step');
+    const indicators = document.querySelectorAll('.step-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    // Show/Hide Steps
+    steps.forEach((step, idx) => {
+        step.classList.toggle('active', idx + 1 === n);
+    });
+
+    // Update Indicators
+    indicators.forEach((ind, idx) => {
+        const stepNum = idx + 1;
+        ind.classList.remove('active', 'completed');
+        if (stepNum === n) {
+            ind.classList.add('active');
+        } else if (stepNum < n) {
+            ind.classList.add('completed');
+            ind.innerHTML = '✓';
+        } else {
+            ind.innerHTML = stepNum;
+        }
+    });
+
+    // Update Buttons
+    prevBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+    nextBtn.textContent = n === 4 ? 'Finalizar' : 'Próximo';
+
+    if (n === 4) {
+        generateNote();
+    }
+}
+
 function setupMasks() {
     // Phone Masks
-    ['fibra-contato', 'radio-contato'].forEach(id => {
-        const el = document.getElementById(id);
-        el.addEventListener('input', (e) => {
+    const contactInput = document.getElementById('common-contato');
+    if (contactInput) {
+        contactInput.addEventListener('input', (e) => {
             e.target.value = maskPhone(e.target.value);
             generateNote();
         });
-    });
+    }
 
     // Signal Masks
     ['fibra-sinal', 'fibra-sinal-cliente', 'radio-sinal'].forEach(id => {
         const el = document.getElementById(id);
-        el.addEventListener('input', (e) => {
-            e.target.value = maskSignal(e.target.value);
-            generateNote();
-        });
+        if (el) {
+            el.addEventListener('input', (e) => {
+                e.target.value = maskSignal(e.target.value);
+                generateNote();
+            });
+        }
     });
 }
 
@@ -137,25 +234,12 @@ function maskSignal(value) {
 }
 
 function clearForm() {
-    const activeTab = getActiveTab();
-    const selector = activeTab === 'fibra' ? '#fibra input, #fibra textarea' : '#radio input, #radio textarea';
-    const inputs = document.querySelectorAll(selector);
+    const form = document.getElementById('os-form');
+    form.reset();
 
-    inputs.forEach(input => {
-        if (input.type === 'checkbox' || input.type === 'radio') {
-            if (input.defaultChecked) {
-                input.checked = true;
-            } else {
-                input.checked = false;
-            }
-        } else {
-            input.value = '';
-        }
-    });
-
-    // Specific reset for radio groups if no default exists (fallback)
-    // But currently HTML has "checked" attributes so defaultChecked works.
-
+    // Additional manual reset for checkboxes if needed, but reset() usually does it
+    // Reset stepper to 1
+    showStep(1);
     generateNote();
 }
 
@@ -196,32 +280,30 @@ function generateNote() {
 }
 
 function generateFibraNote() {
-    const nome = getValue('fibra-nome');
-    const contato = getValue('fibra-contato');
+    const nome = getValue('common-nome');
+    const contato = getValue('common-contato');
     const tipo = getRadioValue('fibra-tipo');
     const status = getRadioValue('fibra-status');
-    const doc = getRadioValue('fibra-doc');
-    const remanejamento = getRadioValue('fibra-remanejamento');
-    const alarmes = getRadioValue('fibra-alarmes');
-    const pppoe = getRadioValue('fibra-pppoe');
-    const hosts = getRadioValue('fibra-hosts');
-    const equipDesligando = getRadioValue('fibra-equip-desligando');
     const sinalCTO = getValue('fibra-sinal');
     const sinalCliente = getValue('fibra-sinal-cliente');
+    const alarmes = getRadioValue('fibra-alarmes');
     const diagnostico = getValue('fibra-diagnostico');
-    const problema = getValue('fibra-problema');
+    const problema = getValue('common-problema');
     const enderecoAtualizado = getRadioValue('end-doc');
     const contatoAtualizado = getRadioValue('cont-doc');
 
     // Checklist Logic
     const checklistItems = [];
-    if (getCheckboxState('fibra-check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
-    if (getCheckboxState('fibra-check-config')) checklistItems.push('+ Configurado roteador no padrão Alsol');
-    if (getCheckboxState('fibra-check-doc')) checklistItems.push('+ Verificado documentação do cliente');
-    //  if (getCheckboxState('fibra-check-sinal')) checklistItems.push(`+ Sinal do cliente: ${sinalCliente ? sinalCliente + 'dBm' : 'N/A'} x CTO: ${sinalCTO ? sinalCTO + 'dBm' : 'N/A'})`);
-    if (getCheckboxState('fibra-check-alarmes')) {
-        const alarmesTexto = alarmes === 'SIM' ? 'Constam alarmes' : 'Sem alarmes';
-        checklistItems.push(`+ Alarmes (${alarmesTexto} ` + (getCheckboxState('LINKLOSS') ? 'LINK LOSS ' : '') + (getCheckboxState('RXLOWPOWER') ? 'RX LOW POWER ' : '') + (getCheckboxState('DYINGGASP') ? 'DYING GASP' : '') + ')');
+    if (getCheckboxState('check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
+    if (getCheckboxState('check-config')) checklistItems.push('+ Configurado roteador no padrão Alsol');
+    if (getCheckboxState('check-doc')) checklistItems.push('+ Verificado documentação do cliente');
+
+    if (alarmes === 'SIM') {
+        const activeAlarms = [];
+        if (getCheckboxState('LINKLOSS')) activeAlarms.push('LINK LOSS');
+        if (getCheckboxState('RXLOWPOWER')) activeAlarms.push('RX LOW');
+        if (getCheckboxState('DYINGGASP')) activeAlarms.push('DYING GASP');
+        checklistItems.push(`+ Alarmes na ONU: ${activeAlarms.length > 0 ? activeAlarms.join(', ') : 'Sim (Não especificados)'}`);
     }
 
     // Solutions Block
@@ -244,15 +326,13 @@ function generateFibraNote() {
 [DADOS CLIENTE]
 Solicitante: ${nome} | Contato: ${contato}
 Endereço Atualizado: ${enderecoAtualizado} | Contato Atualizado: ${contatoAtualizado}
-Documentação: ${doc}
 
 [CONEXÃO]
 Tipo: ${tipo} (${status})
 Sinal Cliente: ${sinalCliente}dBm | CTO: ${sinalCTO}dBm
-Alarmes: ${alarmes} | Perde pacotes PPPoE: ${pppoe} | Perde pacotes Hosts: ${hosts}
-Equip. Desligando: ${equipDesligando} | Remanejamento: ${remanejamento}
+Alarmes: ${alarmes}
 
-[PROBLEMA]
+[PROBLEMA / RELATO]
 ${problema}
 
 [NÍVEL 1]
@@ -262,53 +342,60 @@ ${checklistItems.join('\n')}${solucoesBlock}`;
 // SINAL MÉDIO DA CTO: ${sinalCTO ? sinalCTO + 'dbm' : ''} | Removido
 
 function generateRadioNote() {
-    const nome = getValue('radio-nome');
-    const contato = getValue('radio-contato');
+    const nome = getValue('common-nome');
+    const contato = getValue('common-contato');
     const tipo = getRadioValue('radio-tipo');
     const status = getRadioValue('radio-status');
     const vinculado = getRadioValue('radio-vinculado');
-    const equipDesligando = getRadioValue('radio-equip-desligando');
     const sinal = getValue('radio-sinal');
-    const problema = getValue('radio-problema');
+    const problema = getValue('common-problema');
+    const diagnostico = getValue('radio-diagnostico');
 
     // Checklist Logic
     const checklistItems = [];
-    if (getCheckboxState('radio-check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
+    if (getCheckboxState('check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
+    if (getCheckboxState('check-config')) checklistItems.push('+ Configurado roteador');
 
-    return `[DADOS CLIENTE]
+    // Solutions Block
+    let solucoesBlock = '';
+    if (diagnostico && SOLUTIONS[diagnostico]) {
+        const title = document.querySelector(`#radio-diagnostico option[value="${diagnostico}"]`).textContent;
+        const actions = SOLUTIONS[diagnostico].map(a => `- ${a}`).join('\n');
+        solucoesBlock = `\n\n[AÇÕES PARA TÉCNICO - ${title.toUpperCase()}] \n${actions}`;
+    }
+
+    // Get diagnostic label for header
+    let diagnosticoTexto = '';
+    const diagSelect = document.getElementById('radio-diagnostico');
+    if (diagSelect && diagSelect.selectedIndex > 0) {
+        diagnosticoTexto = diagSelect.options[diagSelect.selectedIndex].text;
+    }
+
+    return `[MOTIVO: ${diagnosticoTexto || 'NÃO INFORMADO'}]
+
+[DADOS CLIENTE]
 Solicitante: ${nome} | Contato: ${contato}
 
 [CONEXÃO]
 Tipo: ${tipo} (${status})
 Sinal Rádio: ${sinal ? sinal + 'dBm' : 'N/A'}
-Vinculado: ${vinculado} | Equip. Desligando: ${equipDesligando}
+Vinculado: ${vinculado}
 
-[PROBLEMA]
+[PROBLEMA / RELATO]
 ${problema}
 
 [NÍVEL 1]
-${checklistItems.join('\n')}`;
+${checklistItems.join('\n')}${solucoesBlock}`;
 }
 
 function generateSecondaryOutput(type) {
-    // Common fields
-    let msgCliente, nome, contato, endAtualizado, contAtualizado, relato;
-
-    if (type === 'fibra') {
-        msgCliente = getRadioValue('fibra-msg');
-        nome = getValue('fibra-nome');
-        contato = getValue('fibra-contato');
-        endAtualizado = getRadioValue('end-doc');
-        contAtualizado = getRadioValue('cont-doc');
-        relato = getValue('fibra-problema');
-    } else {
-        msgCliente = getRadioValue('radio-msg');
-        nome = getValue('radio-nome');
-        contato = getValue('radio-contato');
-        endAtualizado = getRadioValue('radio-end-doc');
-        contAtualizado = getRadioValue('radio-cont-doc');
-        relato = getValue('radio-problema');
-    }
+    const msgField = type === 'fibra' ? 'fibra-msg' : 'radio-msg';
+    const msgCliente = getRadioValue(msgField);
+    const nome = getValue('common-nome');
+    const contato = getValue('common-contato');
+    const endAtualizado = getRadioValue('end-doc');
+    const contAtualizado = getRadioValue('cont-doc');
+    const relato = getValue('common-problema');
 
     return `Mensagem do cliente: ${msgCliente}
 
