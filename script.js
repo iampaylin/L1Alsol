@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Toggle visibility of type-specific fields
             document.querySelectorAll('.type-fibra').forEach(el => {
-                el.style.display = targetType === 'fibra' ? 'flex' : 'none';
+                el.style.display = targetType === 'fibra' ? '' : 'none';
             });
             document.querySelectorAll('.type-radio').forEach(el => {
-                el.style.display = targetType === 'radio' ? 'flex' : 'none';
+                el.style.display = targetType === 'radio' ? '' : 'none';
             });
 
             // Reset stepper to step 1
