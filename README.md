@@ -3,6 +3,6 @@
 - New Design
 - Added radio technical actions
 
-New Patch 2.6.1
+New Patch 2.6.2
 
-- Fix Fibra & Radio alternate bug
+- Soluções para Tracerouter e Ping

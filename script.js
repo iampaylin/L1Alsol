@@ -16,6 +16,23 @@ const SOLUTIONS = {
         'Testar com outro roteador para confirmar funcionamento.',
         'Verificar cabeamento interno do cliente (cabo UTP, tomadas, emendas).'
     ],
+    'ping_instavel': [
+        'Limpar o conector da fibra na ONU com kit de limpeza e reencaixar firme.',
+        'Inspecionar o percurso do cabo de fibra interno — dobra fechada, cabo preso em porta ou objeto em cima já causa isso.',
+        'Verificar se o cabo de rede entre a ONU e o roteador está danificado ou com conector amassado.',
+        'Testar conectar notebook direto na ONU (sem roteador) e refazer o ping — descarta problema no roteador do cliente.',
+        'Substituir cabo de rede se estiver danificado.',
+        'Testar trocar a ONU por uma reserva — se a instabilidade sumir, era a ONU com defeito.',
+        'Verificar se o roteador do cliente está superaquecendo ou com fonte instável.',
+    ],
+
+    'tracert_instavel': [
+        'Limpar e reencaixar conector da fibra na ONU antes de qualquer outra coisa.',
+        'Inspecionar a fibra interna da residência em busca de dobras, emendas improvisadas ou trechos esmagados.',
+        'Testar trocar a ONU por uma reserva e refazer o tracert para comparar.',
+        'Verificar se o cabo de rede entre ONU e roteador está íntegro — substituir se necessário.',
+        'Testar conectar notebook direto na ONU e refazer o tracert — descarta problema no roteador do cliente.',
+    ],
     'oscilacao': [
         'Medir potência da fibra e corrigir se estiver fora do ideal.',
         'Testar estabilidade conectando um dispositivo diretamente na ONU.',
