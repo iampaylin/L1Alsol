@@ -311,24 +311,24 @@ function generateFibraNote() {
 
     // Checklist Logic
     const checklistItems = [];
-    if (getCheckboxState('check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
-    if (getCheckboxState('check-config')) checklistItems.push('+ Configurado roteador no padrão Alsol');
-    if (getCheckboxState('check-doc')) checklistItems.push('+ Verificado documentação do cliente');
+    if (getCheckboxState('check-reiniciado')) checklistItems.push('[x] Reiniciado equipamentos');
+    if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador no padrão Alsol');
+    if (getCheckboxState('check-doc')) checklistItems.push('[x] Verificado documentação do cliente');
 
     if (alarmes === 'SIM') {
         const activeAlarms = [];
         if (getCheckboxState('LINKLOSS')) activeAlarms.push('LINK LOSS');
         if (getCheckboxState('RXLOWPOWER')) activeAlarms.push('RX LOW');
         if (getCheckboxState('DYINGGASP')) activeAlarms.push('DYING GASP');
-        checklistItems.push(`+ Alarmes na ONU: ${activeAlarms.length > 0 ? activeAlarms.join(', ') : 'Sim (Não especificados)'}`);
+        checklistItems.push(`[!] Alarmes na ONU: ${activeAlarms.length > 0 ? activeAlarms.join(', ') : 'Sim (Não especificados)'}`);
     }
 
     // Solutions Block
     let solucoesBlock = '';
     if (diagnostico && SOLUTIONS[diagnostico]) {
         const title = document.querySelector(`#fibra-diagnostico option[value="${diagnostico}"]`).textContent;
-        const actions = SOLUTIONS[diagnostico].map(a => `- ${a}`).join('\n');
-        solucoesBlock = `\n\n[AÇÕES PARA TÉCNICO - ${title.toUpperCase()}] \n${actions}`;
+        const actions = SOLUTIONS[diagnostico].map(a => `  - ${a}`).join('\n');
+        solucoesBlock = `\n\nAÇÕES P/ TÉCNICO (${title.toUpperCase()})\n${actions}`;
     }
 
     // Get diagnostic label for header
@@ -338,22 +338,27 @@ function generateFibraNote() {
         diagnosticoTexto = diagSelect.options[diagSelect.selectedIndex].text;
     }
 
-    return `[MOTIVO: ${diagnosticoTexto || 'NÃO INFORMADO'}]
+    const statusIcon = status === 'ONLINE' ? 'ONLINE' : 'OFFLINE';
 
-[DADOS CLIENTE]
-Solicitante: ${nome} | Contato: ${contato}
-Endereço Atualizado: ${enderecoAtualizado} | Contato Atualizado: ${contatoAtualizado}
+    let acoesNivel1 = '';
+    if (checklistItems.length > 0) {
+        acoesNivel1 = `\n\nAÇÕES (NÍVEL 1)\n${checklistItems.join('\n')}`;
+    }
 
-[CONEXÃO]
-Tipo: ${tipo} (${status})
-Sinal Cliente: ${sinalCliente}dBm | CTO: ${sinalCTO}dBm
-Alarmes: ${alarmes}
+    return `MOTIVO: ${diagnosticoTexto || 'Não Informado'}
 
-[PROBLEMA / RELATO]
-${problema}
+DADOS DO CLIENTE
+- Solicitante: ${nome || '-'}
+- Contato: ${contato || '-'}
+- Cadastro Atualizado: Endereço (${enderecoAtualizado}) | Contato (${contatoAtualizado})
 
-[NÍVEL 1]
-${checklistItems.join('\n')}${solucoesBlock}`;
+CONEXÃO
+- Tipo: ${tipo} (${statusIcon})
+- Sinal Cliente: ${sinalCliente ? sinalCliente + ' dBm' : '-'} | CTO: ${sinalCTO ? sinalCTO + ' dBm' : '-'}
+- Alarmes ONU: ${alarmes}
+
+RELATO DO CLIENTE
+${problema || '-'}${acoesNivel1}${solucoesBlock}`;
 }
 
 // SINAL MÉDIO DA CTO: ${sinalCTO ? sinalCTO + 'dbm' : ''} | Removido
@@ -370,15 +375,15 @@ function generateRadioNote() {
 
     // Checklist Logic
     const checklistItems = [];
-    if (getCheckboxState('check-reiniciado')) checklistItems.push('+ Reiniciado equipamentos');
-    if (getCheckboxState('check-config')) checklistItems.push('+ Configurado roteador');
+    if (getCheckboxState('check-reiniciado')) checklistItems.push('[x] Reiniciado equipamentos');
+    if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador');
 
     // Solutions Block
     let solucoesBlock = '';
     if (diagnostico && SOLUTIONS[diagnostico]) {
         const title = document.querySelector(`#radio-diagnostico option[value="${diagnostico}"]`).textContent;
-        const actions = SOLUTIONS[diagnostico].map(a => `- ${a}`).join('\n');
-        solucoesBlock = `\n\n[AÇÕES PARA TÉCNICO - ${title.toUpperCase()}] \n${actions}`;
+        const actions = SOLUTIONS[diagnostico].map(a => `  - ${a}`).join('\n');
+        solucoesBlock = `\n\nAÇÕES P/ TÉCNICO (${title.toUpperCase()})\n${actions}`;
     }
 
     // Get diagnostic label for header
@@ -388,21 +393,26 @@ function generateRadioNote() {
         diagnosticoTexto = diagSelect.options[diagSelect.selectedIndex].text;
     }
 
-    return `[MOTIVO: ${diagnosticoTexto || 'NÃO INFORMADO'}]
+    const statusIcon = status === 'ONLINE' ? 'ONLINE' : 'OFFLINE';
 
-[DADOS CLIENTE]
-Solicitante: ${nome} | Contato: ${contato}
+    let acoesNivel1 = '';
+    if (checklistItems.length > 0) {
+        acoesNivel1 = `\n\nAÇÕES (NÍVEL 1)\n${checklistItems.join('\n')}`;
+    }
 
-[CONEXÃO]
-Tipo: ${tipo} (${status})
-Sinal Rádio: ${sinal ? sinal + 'dBm' : 'N/A'}
-Vinculado: ${vinculado}
+    return `MOTIVO: ${diagnosticoTexto || 'Não Informado'}
 
-[PROBLEMA / RELATO]
-${problema}
+DADOS DO CLIENTE
+- Solicitante: ${nome || '-'}
+- Contato: ${contato || '-'}
 
-[NÍVEL 1]
-${checklistItems.join('\n')}${solucoesBlock}`;
+CONEXÃO (RÁDIO)
+- Tipo: ${tipo} (${statusIcon})
+- Sinal Rádio: ${sinal ? sinal + ' dBm' : '-'}
+- Vinculado: ${vinculado}
+
+RELATO DO CLIENTE
+${problema || '-'}${acoesNivel1}${solucoesBlock}`;
 }
 
 function generateSecondaryOutput(type) {
@@ -414,16 +424,18 @@ function generateSecondaryOutput(type) {
     const contAtualizado = getRadioValue('cont-doc');
     const relato = getValue('common-problema');
 
-    return `Mensagem do cliente: ${msgCliente}
+    return `MENSAGEM DO CLIENTE: ${msgCliente}
 
-NOME DO SOLICITANTE: ${nome}
-TELEFONE: ${contato}
+DADOS:
+- Nome: ${nome || '-'}
+- Telefone: ${contato || '-'}
 
-ENDEREÇO DO CADASTRO ESTÁ ATUALIZADO? ${endAtualizado}
-TELEFONE DO CADASTRO ESTÁ ATUALIZADO? ${contAtualizado}
+CADASTRO:
+- Endereço Atualizado? ${endAtualizado}
+- Telefone Atualizado? ${contAtualizado}
 
 RELATO DO CLIENTE: 
-${relato}`;
+${relato || '-'}`;
 }
 
 function copyToClipboard(elementId, buttonId) {
