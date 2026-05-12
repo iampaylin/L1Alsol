@@ -1,8 +1,9 @@
 # L1Alsol
 
-- New Design
-- Added radio technical actions
+<img src="./Alsol - Nível 1.png">
 
-New Patch 2.6.2
+New Patch 2.7.0
 
-- Soluções para Tracerouter e Ping
+- Novo tema de cores para o site
+- Adicionado ícones no design do site
+- Remoção das opções "Sim" e "Não" em alarmes na ONU

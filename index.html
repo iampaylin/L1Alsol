@@ -11,7 +11,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -40,7 +43,8 @@
                 <div class="step active" id="step-1">
                     <div class="form-grid">
                         <div class="input-group full-width">
-                            <label>Mensagem do cliente</label>
+                            <label><span class="material-symbols-rounded label-icon">chat_bubble</span>Mensagem do
+                                cliente</label>
                             <div class="radio-group-container">
                                 <!-- Fibra Msg -->
                                 <div class="radio-group type-fibra" id="fibra-msg">
@@ -62,23 +66,26 @@
                         </div>
 
                         <div class="input-group">
-                            <label>Nome do Solicitante</label>
+                            <label><span class="material-symbols-rounded label-icon">person</span>Nome do
+                                Solicitante</label>
                             <input type="text" id="common-nome" placeholder="Nome do solicitante">
                         </div>
                         <div class="input-group">
-                            <label>Contato Cliente</label>
+                            <label><span class="material-symbols-rounded label-icon">call</span>Contato Cliente</label>
                             <input type="text" id="common-contato" placeholder="(XX) XXXXX-XXXX">
                         </div>
 
                         <div class="input-group">
-                            <label>Endereço Atualizado?</label>
+                            <label><span class="material-symbols-rounded label-icon">home</span>Endereço
+                                Atualizado?</label>
                             <div class="radio-group" id="end-doc">
                                 <label><input type="radio" name="end-doc" value="SIM" checked> Sim</label>
                                 <label><input type="radio" name="end-doc" value="NÃO"> Não</label>
                             </div>
                         </div>
                         <div class="input-group">
-                            <label>Contato Atualizado?</label>
+                            <label><span class="material-symbols-rounded label-icon">contact_phone</span>Contato
+                                Atualizado?</label>
                             <div class="radio-group" id="cont-doc">
                                 <label><input type="radio" name="cont-doc" value="SIM" checked> Sim</label>
                                 <label><input type="radio" name="cont-doc" value="NÃO"> Não</label>
@@ -92,14 +99,14 @@
                     <!-- FIBRA DATA -->
                     <div class="form-grid type-fibra">
                         <div class="input-group">
-                            <label>Tipo de Conexão</label>
+                            <label><span class="material-symbols-rounded label-icon">cable</span>Tipo de Conexão</label>
                             <div class="radio-group" id="fibra-tipo">
                                 <label><input type="radio" name="fibra-tipo" value="FTTH" checked> FTTH</label>
                                 <label><input type="radio" name="fibra-tipo" value="SERVIÇO DE TV"> TV</label>
                             </div>
                         </div>
                         <div class="input-group">
-                            <label>Status</label>
+                            <label><span class="material-symbols-rounded label-icon">wifi</span>Status</label>
                             <div class="radio-group" id="fibra-status">
                                 <label class="status-online"><input type="radio" name="fibra-status" value="ONLINE"
                                         checked> Online</label>
@@ -108,29 +115,27 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label>Sinal Cliente (dBm)</label>
+                            <label><span class="material-symbols-rounded label-icon">signal_cellular_alt</span>Sinal
+                                Cliente (dBm)</label>
                             <input type="text" id="fibra-sinal-cliente" placeholder="-22.00">
                         </div>
                         <div class="input-group">
-                            <label>Sinal CTO (dBm)</label>
+                            <label><span class="material-symbols-rounded label-icon">cell_tower</span>Sinal CTO
+                                (dBm)</label>
                             <input type="text" id="fibra-sinal" placeholder="-20.50">
                         </div>
                         <div class="input-group full-width">
-                            <label>Alarmes na ONU?</label>
-                            <div class="alarm-row">
-                                <div class="radio-group" id="fibra-alarmes">
-                                    <label><input type="radio" name="fibra-alarmes" value="SIM"> Sim</label>
-                                    <label><input type="radio" name="fibra-alarmes" value="NÃO" checked> Não</label>
-                                </div>
-                                <div class="checkbox-group horizontal" id="fibra-alarmes-types">
-                                    <label><input type="checkbox" id="LINKLOSS"> LINK LOSS</label>
-                                    <label><input type="checkbox" id="RXLOWPOWER"> RX LOW</label>
-                                    <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
-                                </div>
+                            <label><span class="material-symbols-rounded label-icon">warning</span>Alarmes na
+                                ONU</label>
+                            <div class="checkbox-group horizontal">
+                                <label><input type="checkbox" id="LINKLOSS"> LINK LOSS</label>
+                                <label><input type="checkbox" id="RXLOWPOWER"> RX LOW</label>
+                                <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
                             </div>
                         </div>
                         <div class="input-group full-width">
-                            <label>Diagnóstico Principal</label>
+                            <label><span class="material-symbols-rounded label-icon">troubleshoot</span>Diagnóstico
+                                Principal</label>
                             <select id="fibra-diagnostico">
                                 <option value="">Selecione...</option>
                                 <option value="lentidao">Lentidão</option>
@@ -148,14 +153,15 @@
                     <!-- RADIO DATA -->
                     <div class="form-grid type-radio" style="display: none;">
                         <div class="input-group">
-                            <label>Tipo de Conexão</label>
+                            <label><span class="material-symbols-rounded label-icon">router</span>Tipo de
+                                Conexão</label>
                             <div class="radio-group" id="radio-tipo">
                                 <label><input type="radio" name="radio-tipo" value="WIRELESS" checked> Wireless</label>
                                 <label><input type="radio" name="radio-tipo" value="SERVIÇO DE TV"> TV</label>
                             </div>
                         </div>
                         <div class="input-group">
-                            <label>Status</label>
+                            <label><span class="material-symbols-rounded label-icon">wifi</span>Status</label>
                             <div class="radio-group" id="radio-status">
                                 <label class="status-online"><input type="radio" name="radio-status" value="ONLINE"
                                         checked> Online</label>
@@ -164,18 +170,20 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label>Sinal Rádio (dBm)</label>
+                            <label><span class="material-symbols-rounded label-icon">signal_cellular_alt</span>Sinal
+                                Rádio (dBm)</label>
                             <input type="text" id="radio-sinal" placeholder="-65.00">
                         </div>
                         <div class="input-group">
-                            <label>Vinculado?</label>
+                            <label><span class="material-symbols-rounded label-icon">link</span>Vinculado?</label>
                             <div class="radio-group" id="radio-vinculado">
                                 <label><input type="radio" name="radio-vinculado" value="SIM" checked> Sim</label>
                                 <label><input type="radio" name="radio-vinculado" value="NÃO"> Não</label>
                             </div>
                         </div>
                         <div class="input-group full-width">
-                            <label>Diagnóstico Principal</label>
+                            <label><span class="material-symbols-rounded label-icon">troubleshoot</span>Diagnóstico
+                                Principal</label>
                             <select id="radio-diagnostico">
                                 <option value="">Selecione...</option>
                                 <option value="radio_lento_oscilando">Lentidão / Oscilação</option>
@@ -189,11 +197,14 @@
                 <div class="step" id="step-3">
                     <div class="form-grid">
                         <div class="input-group full-width">
-                            <label>Relato do Cliente</label>
-                            <textarea id="common-problema" rows="2" placeholder="Descreva o problema..."></textarea>
+                            <label><span class="material-symbols-rounded label-icon">description</span>Relato do
+                                Problema</label>
+                            <textarea id="common-problema" rows="2"
+                                placeholder="Descreva o problema..."></textarea>
                         </div>
                         <div class="input-group full-width">
-                            <label>Ações Realizadas (Nível 1)</label>
+                            <label><span class="material-symbols-rounded label-icon">checklist</span>Ações Realizadas
+                                (Nível 1)</label>
                             <div class="checkbox-group horizontal">
                                 <label><input type="checkbox" id="check-reiniciado"> Reiniciado equip.</label>
                                 <label><input type="checkbox" id="check-config"> Config. roteador</label>
@@ -207,12 +218,14 @@
                 <div class="step" id="step-4">
                     <section class="output-section" style="margin-top: 0;">
                         <div class="output-container">
-                            <pre id="output-text-primary"></pre>
-                            <button type="button" id="copy-btn-primary" class="copy-btn">Copiar Nota</button>
+                            <span class="output-label">Ordem de Atendimento</span>
+                            <pre id="output-text-secondary"></pre>
+                            <button type="button" id="copy-btn-secondary" class="copy-btn">Copiar</button>
                         </div>
                         <div class="output-container">
-                            <pre id="output-text-secondary"></pre>
-                            <button type="button" id="copy-btn-secondary" class="copy-btn">Copiar Cliente</button>
+                            <span class="output-label">Ordem de Serviço</span>
+                            <pre id="output-text-primary"></pre>
+                            <button type="button" id="copy-btn-primary" class="copy-btn">Copiar</button>
                         </div>
                     </section>
                 </div>

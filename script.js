@@ -303,11 +303,8 @@ function generateFibraNote() {
     const status = getRadioValue('fibra-status');
     const sinalCTO = getValue('fibra-sinal');
     const sinalCliente = getValue('fibra-sinal-cliente');
-    const alarmes = getRadioValue('fibra-alarmes');
     const diagnostico = getValue('fibra-diagnostico');
     const problema = getValue('common-problema');
-    const enderecoAtualizado = getRadioValue('end-doc');
-    const contatoAtualizado = getRadioValue('cont-doc');
 
     // Checklist Logic
     const checklistItems = [];
@@ -315,12 +312,13 @@ function generateFibraNote() {
     if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador no padrão Alsol');
     if (getCheckboxState('check-doc')) checklistItems.push('[x] Verificado documentação do cliente');
 
-    if (alarmes === 'SIM') {
-        const activeAlarms = [];
-        if (getCheckboxState('LINKLOSS')) activeAlarms.push('LINK LOSS');
-        if (getCheckboxState('RXLOWPOWER')) activeAlarms.push('RX LOW');
-        if (getCheckboxState('DYINGGASP')) activeAlarms.push('DYING GASP');
-        checklistItems.push(`[!] Alarmes na ONU: ${activeAlarms.length > 0 ? activeAlarms.join(', ') : 'Sim (Não especificados)'}`);
+    // Alarm checkboxes (no more Sim/Não radio)
+    const activeAlarms = [];
+    if (getCheckboxState('LINKLOSS')) activeAlarms.push('LINK LOSS');
+    if (getCheckboxState('RXLOWPOWER')) activeAlarms.push('RX LOW');
+    if (getCheckboxState('DYINGGASP')) activeAlarms.push('DYING GASP');
+    if (activeAlarms.length > 0) {
+        checklistItems.push(`[!] Alarmes na ONU: ${activeAlarms.join(', ')}`);
     }
 
     // Solutions Block
@@ -350,18 +348,15 @@ function generateFibraNote() {
 DADOS DO CLIENTE
 - Solicitante: ${nome || '-'}
 - Contato: ${contato || '-'}
-- Cadastro Atualizado: Endereço (${enderecoAtualizado}) | Contato (${contatoAtualizado})
 
 CONEXÃO
 - Tipo: ${tipo} (${statusIcon})
 - Sinal Cliente: ${sinalCliente ? sinalCliente + ' dBm' : '-'} | CTO: ${sinalCTO ? sinalCTO + ' dBm' : '-'}
-- Alarmes ONU: ${alarmes}
 
-RELATO DO CLIENTE
+RELATO DO PROBLEMA
 ${problema || '-'}${acoesNivel1}${solucoesBlock}`;
 }
 
-// SINAL MÉDIO DA CTO: ${sinalCTO ? sinalCTO + 'dbm' : ''} | Removido
 
 function generateRadioNote() {
     const nome = getValue('common-nome');
@@ -411,7 +406,7 @@ CONEXÃO (RÁDIO)
 - Sinal Rádio: ${sinal ? sinal + ' dBm' : '-'}
 - Vinculado: ${vinculado}
 
-RELATO DO CLIENTE
+RELATO DO PROBLEMA
 ${problema || '-'}${acoesNivel1}${solucoesBlock}`;
 }
 
@@ -420,9 +415,9 @@ function generateSecondaryOutput(type) {
     const msgCliente = getRadioValue(msgField);
     const nome = getValue('common-nome');
     const contato = getValue('common-contato');
+    const relato = getValue('common-problema');
     const endAtualizado = getRadioValue('end-doc');
     const contAtualizado = getRadioValue('cont-doc');
-    const relato = getValue('common-problema');
 
     return `MENSAGEM DO CLIENTE: ${msgCliente}
 
@@ -434,7 +429,7 @@ CADASTRO:
 - Endereço Atualizado? ${endAtualizado}
 - Telefone Atualizado? ${contAtualizado}
 
-RELATO DO CLIENTE: 
+RELATO DO PROBLEMA: 
 ${relato || '-'}`;
 }
 
