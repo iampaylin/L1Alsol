@@ -1,8 +1,5 @@
-# L1Alsol | New Patch 2.8.0
+# L1Alsol | New Patch 2.9.0
 
 <img src="./Alsol - Nível 1.png">
 
-- Novo tema de cores para o site
-- Adicionado ícones no design do site
-- Remoção das opções "Sim" e "Não" em alarmes na ONU
-- Remoção de cadastro e número atualizados na ordem de serviço
+- Função de extrair dados a partir de uma ordem de atendimento

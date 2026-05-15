@@ -55,9 +55,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Outfit", "SF Pro Text", "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Outfit", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -91,6 +89,13 @@ header {
   text-align: center;
   margin-bottom: 2rem;
   flex-shrink: 0;
+  position: relative;
+}
+
+.header-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 header h1 {
@@ -275,21 +280,46 @@ textarea {
   min-height: 80px;
 }
 
+/* Quick Descriptions Tags */
+.quick-descriptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.quick-desc-tag {
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.quick-desc-tag:hover {
+  background: var(--card-bg);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
 /* Radio Groups */
 .radio-group-container {
   display: flex;
   flex-direction: column;
 }
 
-.radio-group,
-.checkbox-group {
+.radio-group, .checkbox-group {
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
 }
 
-.radio-group label,
-.checkbox-group label {
+.radio-group label, .checkbox-group label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -305,8 +335,7 @@ textarea {
   user-select: none;
 }
 
-.radio-group input[type="radio"],
-.checkbox-group input[type="checkbox"] {
+.radio-group input[type="radio"], .checkbox-group input[type="checkbox"] {
   width: 18px;
   height: 18px;
   margin: 0;
@@ -314,13 +343,11 @@ textarea {
   cursor: pointer;
 }
 
-.radio-group label:hover,
-.checkbox-group label:hover {
+.radio-group label:hover, .checkbox-group label:hover {
   border-color: var(--text-secondary);
 }
 
-.radio-group label:has(input:checked),
-.checkbox-group label:has(input:checked) {
+.radio-group label:has(input:checked), .checkbox-group label:has(input:checked) {
   border-color: var(--accent-color);
   background: var(--input-focus-ring);
   color: var(--accent-color);
@@ -390,10 +417,7 @@ pre {
   word-break: break-all;
   max-height: 30vh;
   overflow-y: auto;
-  font-family:
-    ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 }
 
 pre::-webkit-scrollbar {
@@ -449,8 +473,7 @@ pre::-webkit-scrollbar-thumb {
 }
 
 /* Disable copy-btn focus outline in favor of subtle scale */
-.copy-btn:focus,
-.secondary-btn:focus {
+.copy-btn:focus, .secondary-btn:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--input-focus-ring);
 }
@@ -461,7 +484,7 @@ pre::-webkit-scrollbar-thumb {
     padding: 1.5rem;
     border-radius: 16px;
   }
-
+  
   .form-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -475,9 +498,106 @@ pre::-webkit-scrollbar-thumb {
     flex-direction: column;
     align-items: stretch;
   }
-
+  
   #step-4 .output-section {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 }
+
+/* Extract Data Button */
+.extract-btn {
+  background: transparent;
+  border: 1px dashed var(--accent-color);
+  color: var(--accent-color);
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.extract-btn:hover {
+  background: var(--input-focus-ring);
+  border-style: solid;
+}
+
+/* Extract Modal */
+.extract-modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+}
+
+.extract-modal-overlay.active {
+  display: flex;
+}
+
+.extract-modal-box {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 560px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.extract-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.extract-modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.extract-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.extract-modal-close:hover {
+  color: var(--danger-color);
+}
+
+#extract-textarea {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid transparent;
+  padding: 14px 16px;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Courier New", monospace;
+  resize: vertical;
+  min-height: 180px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+#extract-textarea:focus {
+  outline: none;
+  background: var(--card-bg);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--input-focus-ring);
+}

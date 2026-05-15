@@ -141,6 +141,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Quick Description Tags
+    const quickDescTags = document.querySelectorAll('.quick-desc-tag');
+    const problemaTextarea = document.getElementById('common-problema');
+    quickDescTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            const currentText = problemaTextarea.value.trim();
+            const tagText = tag.textContent;
+
+            if (currentText) {
+                problemaTextarea.value = currentText + '\n' + tagText;
+            } else {
+                problemaTextarea.value = tagText;
+            }
+
+            generateNote();
+        });
+    });
+
     // Initial State
     showStep(1);
     generateNote();
@@ -153,10 +171,6 @@ function changeStep(n) {
     if (n > 0) {
         if (currentStep === 1) {
             const nome = document.getElementById('common-nome').value;
-            if (!nome) {
-                alert('Por favor, preencha o nome do solicitante.');
-                return;
-            }
         }
     }
 
@@ -305,6 +319,8 @@ function generateFibraNote() {
     const sinalCliente = getValue('fibra-sinal-cliente');
     const diagnostico = getValue('fibra-diagnostico');
     const problema = getValue('common-problema');
+    const enderecoAtualizado = getRadioValue('end-doc');
+    const contatoAtualizado = getRadioValue('cont-doc');
 
     // Checklist Logic
     const checklistItems = [];
@@ -348,6 +364,7 @@ function generateFibraNote() {
 DADOS DO CLIENTE
 - Solicitante: ${nome || '-'}
 - Contato: ${contato || '-'}
+- Cadastro Atualizado: Endereço (${enderecoAtualizado}) | Contato (${contatoAtualizado})
 
 CONEXÃO
 - Tipo: ${tipo} (${statusIcon})
@@ -449,8 +466,152 @@ function copyToClipboard(elementId, buttonId) {
         setTimeout(() => {
             btn.textContent = originalText;
             btn.style.backgroundColor = ''; // Revert to CSS default
+            btn.style.color = '';
         }, 2000);
     }).catch(err => {
         console.error('Failed to copy: ', err);
     });
 }
+
+// ==========================================
+// EXTRACT DATA - Modal & Parsing Logic
+// ==========================================
+
+(function () {
+    document.addEventListener('DOMContentLoaded', () => {
+        const extractBtn = document.getElementById('extract-btn');
+        const extractModal = document.getElementById('extract-modal');
+        const extractClose = document.getElementById('extract-modal-close');
+        const extractRunBtn = document.getElementById('extract-run-btn');
+        const extractTextarea = document.getElementById('extract-textarea');
+
+        // Open modal
+        extractBtn.addEventListener('click', () => {
+            extractModal.classList.add('active');
+            extractTextarea.value = '';
+            extractTextarea.focus();
+        });
+
+        // Close modal
+        extractClose.addEventListener('click', () => {
+            extractModal.classList.remove('active');
+        });
+
+        // Close on overlay click
+        extractModal.addEventListener('click', (e) => {
+            if (e.target === extractModal) {
+                extractModal.classList.remove('active');
+            }
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && extractModal.classList.contains('active')) {
+                extractModal.classList.remove('active');
+            }
+        });
+
+        // Run extraction
+        extractRunBtn.addEventListener('click', () => {
+            const raw = extractTextarea.value;
+            if (!raw.trim()) return;
+
+            parseAndFill(raw);
+            extractModal.classList.remove('active');
+        });
+    });
+
+    function parseAndFill(text) {
+        // Helper: check if (x) is marked — flexible whitespace
+        const isChecked = (str) => /\(\s*x\s*\)/i.test(str);
+
+        // --- NOME DO SOLICITANTE ---
+        const nomeMatch = text.match(/NOME\s+DO\s+SOLICITANTE:\s*(.+)/i);
+        if (nomeMatch) {
+            document.getElementById('common-nome').value = nomeMatch[1].trim();
+        }
+
+        // --- TELEFONE (first occurrence after "TELEFONE:") ---
+        const telMatch = text.match(/TELEFONE:\s*(.+)/i);
+        if (telMatch) {
+            document.getElementById('common-contato').value = telMatch[1].trim();
+        }
+
+        // --- ENDEREÇO ATUALIZADO ---
+        const endMatch = text.match(/ENDEREÇO\s+DO\s+CADASTRO\s+EST[AÁ]\s+ATUALIZADO\?\s*(.+)/i);
+        if (endMatch) {
+            const line = endMatch[1];
+            // Split by | to get SIM and NÃO parts
+            const parts = line.split('|');
+            let endValue = 'SIM'; // default
+            if (parts.length >= 2) {
+                // Check which part has the (x)
+                if (isChecked(parts[0])) endValue = 'SIM';
+                else if (isChecked(parts[1])) endValue = 'NÃO';
+            } else {
+                // Single part — check for NÃO
+                if (/N[AÃ]O/i.test(line) && isChecked(line)) endValue = 'NÃO';
+            }
+            setRadio('end-doc', endValue);
+        }
+
+        // --- TELEFONE ATUALIZADO ---
+        const contMatch = text.match(/TELEFONE\s+DO\s+CADASTRO\s+EST[AÁ]\s+ATUALIZADO\?\s*(.+)/i);
+        if (contMatch) {
+            const line = contMatch[1];
+            const parts = line.split('|');
+            let contValue = 'SIM';
+            if (parts.length >= 2) {
+                if (isChecked(parts[0])) contValue = 'SIM';
+                else if (isChecked(parts[1])) contValue = 'NÃO';
+            } else {
+                if (/N[AÃ]O/i.test(line) && isChecked(line)) contValue = 'NÃO';
+            }
+            setRadio('cont-doc', contValue);
+        }
+
+        // --- RELATO DO CLIENTE ---
+        const relatoMatch = text.match(/RELATO\s+DO\s+CLIENTE:\s*([\s\S]*?)$/i);
+        if (relatoMatch) {
+            document.getElementById('common-problema').value = relatoMatch[1].trim();
+        }
+
+        // --- MENSAGEM DO CLIENTE ---
+        // Look for the block that starts with "Mensagem do cliente:" and spans multiple lines
+        const msgBlock = text.match(/Mensagem\s+do\s+cliente:\s*([\s\S]*?)(?=\n\s*\n|NOME\s+DO\s+SOLICITANTE)/i);
+        if (msgBlock) {
+            const block = msgBlock[0] + msgBlock[1];
+            let msgValue = '';
+
+            // Check each option
+            const semServico = block.match(/(\([^)]*\))\s*SEM\s+SERVI[ÇC]O/i);
+            const instabilidade = block.match(/(\([^)]*\))\s*SERVI[ÇC]O\s+COM\s+INSTABILIDADE/i);
+            const outro = block.match(/(\([^)]*\))\s*OUTRO/i);
+
+            if (semServico && isChecked(semServico[1])) {
+                msgValue = 'SEM SERVIÇO';
+            } else if (instabilidade && isChecked(instabilidade[1])) {
+                msgValue = 'SERVIÇO COM INSTABILIDADE';
+            } else if (outro && isChecked(outro[1])) {
+                msgValue = 'OUTRO';
+            }
+
+            if (msgValue) {
+                const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+                const radioName = activeTab === 'radio' ? 'radio-msg' : 'fibra-msg';
+                setRadio(radioName, msgValue);
+            }
+        }
+
+        // Navigate to Step 1 and regenerate notes
+        showStep(1);
+        generateNote();
+    }
+
+    function setRadio(name, value) {
+        const radio = document.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (radio) {
+            radio.checked = true;
+        }
+    }
+})();

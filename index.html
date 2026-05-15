@@ -21,6 +21,11 @@
 
     <div class="container">
         <header>
+            <div class="header-actions">
+                <button type="button" id="extract-btn" class="extract-btn">
+                    <span class="material-symbols-rounded" style="font-size:1.1em;vertical-align:middle;margin-right:4px;">content_paste</span>Extrair Dados
+                </button>
+            </div>
             <h1>Ordem de serviço</h1>
             <div class="stepper-header">
                 <div class="step-indicator active" data-step="1">1</div>
@@ -36,6 +41,18 @@
                 <button class="tab-btn" data-tab="radio">Rádio</button>
             </div>
         </header>
+
+    <!-- EXTRACT MODAL -->
+    <div id="extract-modal" class="extract-modal-overlay">
+        <div class="extract-modal-box">
+            <div class="extract-modal-header">
+                <h3><span class="material-symbols-rounded" style="vertical-align:middle;margin-right:6px;">content_paste_search</span>Extrair Dados do Nível 1</h3>
+                <button type="button" id="extract-modal-close" class="extract-modal-close">&times;</button>
+            </div>
+            <textarea id="extract-textarea" placeholder="Cole aqui o texto do Nível 1..." rows="12"></textarea>
+            <button type="button" id="extract-run-btn" class="copy-btn" style="width:100%;margin-top:0.8rem;">Extrair e Preencher</button>
+        </div>
+    </div>
 
         <main>
             <form id="os-form">
@@ -199,6 +216,11 @@
                         <div class="input-group full-width">
                             <label><span class="material-symbols-rounded label-icon">description</span>Relato do
                                 Problema</label>
+                            <div class="quick-descriptions">
+                                <span class="quick-desc-tag">Sem conexão, ONU LINK LOSS</span>
+                                <span class="quick-desc-tag">Sem conexão, LAN sem fios</span>
+                                <span class="quick-desc-tag">Sem conexão, ONU DYING GASP</span>
+                            </div>
                             <textarea id="common-problema" rows="2"
                                 placeholder="Descreva o problema..."></textarea>
                         </div>
