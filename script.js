@@ -433,6 +433,7 @@ function generateSecondaryOutput(type) {
     const nome = getValue('common-nome');
     const contato = getValue('common-contato');
     const relato = getValue('common-problema');
+
     const endAtualizado = getRadioValue('end-doc');
     const contAtualizado = getRadioValue('cont-doc');
 
@@ -615,3 +616,113 @@ function copyToClipboard(elementId, buttonId) {
         }
     }
 })();
+
+// ==========================================
+// THEMES LOGIC
+// ==========================================
+
+(function () {
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeBtn = document.getElementById('theme-btn');
+        const themeModal = document.getElementById('theme-modal');
+        const themeClose = document.getElementById('theme-modal-close');
+        const themeCards = document.querySelectorAll('.theme-card');
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('alsol_theme') || 'default';
+        applyTheme(savedTheme);
+
+        // Open modal
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                themeModal.classList.add('active');
+            });
+        }
+
+        // Close modal
+        if (themeClose) {
+            themeClose.addEventListener('click', () => {
+                themeModal.classList.remove('active');
+            });
+        }
+
+        if (themeModal) {
+            themeModal.addEventListener('click', (e) => {
+                if (e.target === themeModal) {
+                    themeModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && themeModal && themeModal.classList.contains('active')) {
+                themeModal.classList.remove('active');
+            }
+        });
+
+        // Handle Theme Selection
+        themeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const themeName = card.getAttribute('data-theme');
+                applyTheme(themeName);
+                localStorage.setItem('alsol_theme', themeName);
+            });
+        });
+
+        function applyTheme(themeName) {
+            // Update active card
+            themeCards.forEach(c => c.classList.remove('active'));
+            const activeCard = document.querySelector(`.theme-card[data-theme="${themeName}"]`);
+            if (activeCard) activeCard.classList.add('active');
+
+            // Reset body classes
+            document.body.className = '';
+
+            if (themeName !== 'default') {
+                // Apply theme class and glass-mode
+                document.body.classList.add(`theme-${themeName}`);
+                document.body.classList.add('glass-mode');
+            }
+        }
+    });
+})();
+
+/* 
+=============================================================================
+TUTORIAL: COMO CRIAR NOVOS TEMAS DE WALLPAPER E CORES
+=============================================================================
+
+Para adicionar um novo tema, siga estes 3 passos simples:
+
+PASSO 1: Adicionar o card no index.html
+---------------------------------------
+Encontre a div com a classe "themes-grid" no arquivo index.html e adicione um novo bloco de card.
+Exemplo para um tema chamado "cyberpunk":
+
+<div class="theme-card" data-theme="cyberpunk">
+    <div class="theme-preview" style="background: url('themes/cyberpunk.png') center/cover;"></div>
+    <span>Cyberpunk</span>
+</div>
+
+PASSO 2: Adicionar as cores e a imagem no style.css
+---------------------------------------------------
+Vá até o arquivo style.css, role até o final (seção Glassmorphism Variables) e 
+crie a classe do seu tema. A classe deve se chamar "body.theme-" + o nome que você colocou no data-theme.
+
+body.theme-cyberpunk {
+  background-image: url('themes/cyberpunk.png');
+  --accent-color: #ff007f;
+  --accent-hover: #e60073;
+  --input-focus-ring: rgba(255, 0, 127, 0.3);
+}
+
+PASSO 3: Adicionar a imagem na pasta
+------------------------------------
+Coloque a imagem escolhida (ex: cyberpunk.png) dentro da pasta "themes".
+
+PRONTO! 
+A lógica em JavaScript cuidará do resto automaticamente: 
+ela ativará a imagem e aplicará a classe "glass-mode" para que o fundo fique desfocado (efeito vidro).
+=============================================================================
+*/

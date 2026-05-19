@@ -1,5 +1,8 @@
-# L1Alsol | New Patch 2.9.0
+# L1Alsol | New Patch 3.0.0
 
 <img src="./Alsol - Nível 1.png">
 
-- Função de extrair dados a partir de uma ordem de atendimento
+Novo patch:
+
+- Novos temas disponíveis
+- Correção de tamanho do conteúdo principal

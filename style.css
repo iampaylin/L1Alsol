@@ -83,6 +83,7 @@ body {
   padding: 2.5rem;
   box-sizing: border-box;
   transition: all 0.3s ease;
+  height: 640px; /* Tamanho fixo absoluto para nunca pular */
 }
 
 header {
@@ -192,11 +193,14 @@ main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 #os-form {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
 }
 
 /* Steps */
@@ -205,6 +209,18 @@ main {
   flex-direction: column;
   gap: 1.5rem;
   animation: fadeIn 0.4s ease forwards;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.step::-webkit-scrollbar {
+  width: 6px;
+}
+
+.step::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
 }
 
 .step.active {
@@ -432,9 +448,10 @@ pre::-webkit-scrollbar-thumb {
 .nav-buttons {
   display: flex;
   padding-top: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: auto;
   border-top: 1px solid var(--border-color);
   gap: 1rem;
+  flex-shrink: 0;
 }
 
 .copy-btn,
@@ -525,6 +542,32 @@ pre::-webkit-scrollbar-thumb {
   border-style: solid;
 }
 
+/* Floating Theme Button */
+.theme-floating-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+  transition: all 0.2s ease;
+}
+
+.theme-floating-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
 /* Extract Modal */
 .extract-modal-overlay {
   display: none;
@@ -600,4 +643,124 @@ pre::-webkit-scrollbar-thumb {
   background: var(--card-bg);
   border-color: var(--accent-color);
   box-shadow: 0 0 0 4px var(--input-focus-ring);
+}
+
+/* ==========================================
+   THEMES & GLASSMORPHISM
+   ========================================== */
+
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.theme-card:hover {
+  background: var(--input-bg);
+}
+
+.theme-card.active {
+  border-color: var(--accent-color);
+  background: var(--input-focus-ring);
+}
+
+.theme-preview {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  background-color: var(--card-bg);
+}
+
+.theme-card span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Glassmorphism Variables & Classes */
+body.theme-nature {
+  background-image: url('themes/nature.png');
+  --accent-color: #4CAF50;
+  --accent-hover: #45a049;
+  --input-focus-ring: rgba(76, 175, 80, 0.3);
+}
+
+body.theme-space {
+  background-image: url('themes/space.png');
+  --accent-color: #9c27b0;
+  --accent-hover: #8e24aa;
+  --input-focus-ring: rgba(156, 39, 176, 0.3);
+}
+
+body.theme-ocean {
+  background-image: url('themes/ocean.png');
+  --accent-color: #03a9f4;
+  --accent-hover: #039be5;
+  --input-focus-ring: rgba(3, 169, 244, 0.3);
+}
+
+/* Quando um tema com wallpaper for ativado, a classe glass-mode é aplicada */
+body.glass-mode {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  
+  /* Ajuste de variáveis para o modo translúcido */
+  --card-bg: rgba(255, 255, 255, 0.15);
+  --input-bg: rgba(0, 0, 0, 0.35);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  body.glass-mode {
+    --card-bg: rgba(0, 0, 0, 0.4);
+    --input-bg: rgba(0, 0, 0, 0.5);
+    --border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+body.glass-mode .container {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.glass-mode .extract-modal-box {
+  background: rgba(30, 30, 30, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.glass-mode .tab-btn {
+  color: var(--text-primary);
+}
+
+body.glass-mode .tab-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+body.glass-mode select option {
+  background: #2a2a2a; 
+  color: #fff;
+}
+
+body.glass-mode .theme-card:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
