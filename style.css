@@ -55,7 +55,9 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Outfit", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Outfit", "SF Pro Text", "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -329,13 +331,15 @@ textarea {
   flex-direction: column;
 }
 
-.radio-group, .checkbox-group {
+.radio-group,
+.checkbox-group {
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
 }
 
-.radio-group label, .checkbox-group label {
+.radio-group label,
+.checkbox-group label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -351,7 +355,8 @@ textarea {
   user-select: none;
 }
 
-.radio-group input[type="radio"], .checkbox-group input[type="checkbox"] {
+.radio-group input[type="radio"],
+.checkbox-group input[type="checkbox"] {
   width: 18px;
   height: 18px;
   margin: 0;
@@ -359,11 +364,13 @@ textarea {
   cursor: pointer;
 }
 
-.radio-group label:hover, .checkbox-group label:hover {
+.radio-group label:hover,
+.checkbox-group label:hover {
   border-color: var(--text-secondary);
 }
 
-.radio-group label:has(input:checked), .checkbox-group label:has(input:checked) {
+.radio-group label:has(input:checked),
+.checkbox-group label:has(input:checked) {
   border-color: var(--accent-color);
   background: var(--input-focus-ring);
   color: var(--accent-color);
@@ -433,7 +440,10 @@ pre {
   word-break: break-all;
   max-height: 30vh;
   overflow-y: auto;
-  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 }
 
 pre::-webkit-scrollbar {
@@ -490,7 +500,8 @@ pre::-webkit-scrollbar-thumb {
 }
 
 /* Disable copy-btn focus outline in favor of subtle scale */
-.copy-btn:focus, .secondary-btn:focus {
+.copy-btn:focus,
+.secondary-btn:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--input-focus-ring);
 }
@@ -501,7 +512,7 @@ pre::-webkit-scrollbar-thumb {
     padding: 1.5rem;
     border-radius: 16px;
   }
-  
+
   .form-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -515,7 +526,7 @@ pre::-webkit-scrollbar-thumb {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   #step-4 .output-section {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -631,7 +642,8 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 12px;
   color: var(--text-primary);
   font-size: 0.9rem;
-  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, Menlo, Monaco, "Cascadia Mono", "Courier New", monospace;
   resize: vertical;
   min-height: 180px;
   box-sizing: border-box;
@@ -692,23 +704,30 @@ pre::-webkit-scrollbar-thumb {
 
 /* Glassmorphism Variables & Classes */
 body.theme-nature {
-  background-image: url('themes/nature.png');
-  --accent-color: #4CAF50;
+  background-image: url("themes/nature.png");
+  --accent-color: #4caf50;
   --accent-hover: #45a049;
   --input-focus-ring: rgba(76, 175, 80, 0.3);
 }
 
 body.theme-space {
-  background-image: url('themes/space.png');
+  background-image: url("themes/space.png");
   --accent-color: #9c27b0;
   --accent-hover: #8e24aa;
   --input-focus-ring: rgba(156, 39, 176, 0.3);
 }
 
 body.theme-ocean {
-  background-image: url('themes/ocean.png');
+  background-image: url("themes/ocean.png");
   --accent-color: #03a9f4;
   --accent-hover: #039be5;
+  --input-focus-ring: rgba(3, 169, 244, 0.3);
+}
+
+body.theme-robin {
+  background-image: url("themes/robin.webp");
+  --accent-color: #158fbf;
+  --accent-hover: #158fbf;
   --input-focus-ring: rgba(3, 169, 244, 0.3);
 }
 
@@ -717,7 +736,7 @@ body.glass-mode {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  
+
   /* Ajuste de variáveis para o modo translúcido */
   --card-bg: rgba(255, 255, 255, 0.15);
   --input-bg: rgba(0, 0, 0, 0.35);
@@ -729,14 +748,14 @@ body.glass-mode {
 
 @media (prefers-color-scheme: dark) {
   body.glass-mode {
-    --card-bg: rgba(0, 0, 0, 0.4);
+    --card-bg: rgba(0, 0, 0, 0.5);
     --input-bg: rgba(0, 0, 0, 0.5);
     --border-color: rgba(255, 255, 255, 0.15);
   }
 }
 
 body.glass-mode .container {
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -757,10 +776,10 @@ body.glass-mode .tab-btn.active {
 }
 
 body.glass-mode select option {
-  background: #2a2a2a; 
+  background: #2a2a2a;
   color: #fff;
 }
 
 body.glass-mode .theme-card:hover {
   background: rgba(255, 255, 255, 0.1);
-}
+}

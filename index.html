@@ -28,7 +28,9 @@
         <header>
             <div class="header-actions">
                 <button type="button" id="extract-btn" class="extract-btn">
-                    <span class="material-symbols-rounded" style="font-size:1.1em;vertical-align:middle;margin-right:4px;">content_paste</span>Extrair Dados
+                    <span class="material-symbols-rounded"
+                        style="font-size:1.1em;vertical-align:middle;margin-right:4px;">content_paste</span>Extrair
+                    Dados
                 </button>
             </div>
             <h1>Ordem de serviço</h1>
@@ -47,45 +49,54 @@
             </div>
         </header>
 
-    <!-- EXTRACT MODAL -->
-    <div id="extract-modal" class="extract-modal-overlay">
-        <div class="extract-modal-box">
-            <div class="extract-modal-header">
-                <h3><span class="material-symbols-rounded" style="vertical-align:middle;margin-right:6px;">content_paste_search</span>Extrair Dados do Nível 1</h3>
-                <button type="button" id="extract-modal-close" class="extract-modal-close">&times;</button>
+        <!-- EXTRACT MODAL -->
+        <div id="extract-modal" class="extract-modal-overlay">
+            <div class="extract-modal-box">
+                <div class="extract-modal-header">
+                    <h3><span class="material-symbols-rounded"
+                            style="vertical-align:middle;margin-right:6px;">content_paste_search</span>Extrair Dados do
+                        Nível 1</h3>
+                    <button type="button" id="extract-modal-close" class="extract-modal-close">&times;</button>
+                </div>
+                <textarea id="extract-textarea" placeholder="Cole aqui o texto do Nível 1..." rows="12"></textarea>
+                <button type="button" id="extract-run-btn" class="copy-btn"
+                    style="width:100%;margin-top:0.8rem;">Extrair e Preencher</button>
             </div>
-            <textarea id="extract-textarea" placeholder="Cole aqui o texto do Nível 1..." rows="12"></textarea>
-            <button type="button" id="extract-run-btn" class="copy-btn" style="width:100%;margin-top:0.8rem;">Extrair e Preencher</button>
         </div>
-    </div>
 
-    <!-- THEMES MODAL -->
-    <div id="theme-modal" class="extract-modal-overlay">
-        <div class="extract-modal-box" style="max-width: 400px;">
-            <div class="extract-modal-header">
-                <h3><span class="material-symbols-rounded" style="vertical-align:middle;margin-right:6px;">palette</span>Escolha um Tema</h3>
-                <button type="button" id="theme-modal-close" class="extract-modal-close">&times;</button>
-            </div>
-            <div class="themes-grid">
-                <div class="theme-card active" data-theme="default">
-                    <div class="theme-preview" style="background: var(--input-bg); border: 1px solid var(--border-color);"></div>
-                    <span>Padrão</span>
+        <!-- THEMES MODAL -->
+        <div id="theme-modal" class="extract-modal-overlay">
+            <div class="extract-modal-box" style="max-width: 400px;">
+                <div class="extract-modal-header">
+                    <h3><span class="material-symbols-rounded"
+                            style="vertical-align:middle;margin-right:6px;">palette</span>Escolha um Tema</h3>
+                    <button type="button" id="theme-modal-close" class="extract-modal-close">&times;</button>
                 </div>
-                <div class="theme-card" data-theme="nature">
-                    <div class="theme-preview" style="background: url('themes/nature.png') center/cover;"></div>
-                    <span>Natureza</span>
-                </div>
-                <div class="theme-card" data-theme="space">
-                    <div class="theme-preview" style="background: url('themes/space.png') center/cover;"></div>
-                    <span>Espaço</span>
-                </div>
-                <div class="theme-card" data-theme="ocean">
-                    <div class="theme-preview" style="background: url('themes/ocean.png') center/cover;"></div>
-                    <span>Oceano</span>
+                <div class="themes-grid">
+                    <div class="theme-card active" data-theme="default">
+                        <div class="theme-preview"
+                            style="background: var(--input-bg); border: 1px solid var(--border-color);"></div>
+                        <span>Padrão</span>
+                    </div>
+                    <div class="theme-card" data-theme="nature">
+                        <div class="theme-preview" style="background: url('themes/nature.png') center/cover;"></div>
+                        <span>Natureza</span>
+                    </div>
+                    <div class="theme-card" data-theme="space">
+                        <div class="theme-preview" style="background: url('themes/space.png') center/cover;"></div>
+                        <span>Espaço</span>
+                    </div>
+                    <div class="theme-card" data-theme="ocean">
+                        <div class="theme-preview" style="background: url('themes/ocean.png') center/cover;"></div>
+                        <span>Oceano</span>
+                    </div>
+                    <div class="theme-card" data-theme="robin">
+                        <div class="theme-preview" style="background: url('themes/robin.webp') right;"></div>
+                        <span>Robin</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <main>
             <form id="os-form">
@@ -254,8 +265,7 @@
                                 <span class="quick-desc-tag">Sem conexão, LAN sem fios</span>
                                 <span class="quick-desc-tag">Sem conexão, ONU DYING GASP</span>
                             </div>
-                            <textarea id="common-problema" rows="2"
-                                placeholder="Descreva o problema..."></textarea>
+                            <textarea id="common-problema" rows="2" placeholder="Descreva o problema..."></textarea>
                         </div>
                         <div class="input-group full-width">
                             <label><span class="material-symbols-rounded label-icon">checklist</span>Ações Realizadas
