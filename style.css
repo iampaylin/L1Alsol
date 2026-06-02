@@ -725,10 +725,10 @@ body.theme-ocean {
 }
 
 body.theme-robin {
-  background-image: url("themes/robin.webp");
-  --accent-color: #158fbf;
-  --accent-hover: #158fbf;
-  --input-focus-ring: rgba(3, 169, 244, 0.3);
+  background-image: url("themes/robin.jpg");
+  --accent-color: #a6335d;
+  --accent-hover: #a6335d;
+  --input-focus-ring: rgba(244, 3, 75, 0.3);
 }
 
 /* Quando um tema com wallpaper for ativado, a classe glass-mode é aplicada */
