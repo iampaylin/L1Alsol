@@ -1,75 +1,75 @@
-// Solutions Data
+// Solutions Data (Instruções simplificadas para os técnicos)
 const SOLUTIONS = {
     'lentidao': [
-        'Verificar integridade da fibra até a ONU (dobras, esmagamentos, rompimentos).',
-        'Revisar conectores, fusões e possíveis microdobras.',
-        'Testar navegação diretamente pelo cabo conectado na ONU.',
-        'Medir potência óptica na ONU e no conector externo.',
-        'Verificar se o roteador do cliente está defeituoso, superaquecendo ou com fonte instável.',
-        'Substituir cabo de rede danificado.',
-        'Reconfigurar ou substituir roteador, se necessário.'
+        'Verificar se o cabo de fibra está dobrado, prensado ou quebrado (olhar todo o caminho da fibra).',
+        'Verificar se os conectores da fibra estão bem encaixados ou se precisam ser refeitos.',
+        'Testar a internet ligando um computador com cabo direto no aparelho da fibra (ONU).',
+        'Medir a força do sinal da fibra no aparelho do cliente e na caixa da rua.',
+        'Testar se o roteador do cliente está muito quente, travando ou com mau contato na energia.',
+        'Trocar o cabo de rede que liga o roteador ao aparelho da internet se estiver velho ou quebrado.',
+        'Reiniciar, configurar do zero ou trocar o roteador se continuar ruim.'
     ],
     'sem_conexao': [
-        'Testar sinal óptico na CTO e na fibra do cliente.',
-        'Verificar fusões, conectores e eventual rompimento.',
-        'Testar outra ONU e substituir se necessário.',
-        'Testar com outro roteador para confirmar funcionamento.',
-        'Verificar cabeamento interno do cliente (cabo UTP, tomadas, emendas).'
+        'Medir o sinal da fibra na caixa de atendimento na rua e na casa do cliente.',
+        'Procurar por rompimento no cabo ou problemas nas emendas da fibra.',
+        'Testar outra ONU para ver se a atual queimou ou estragou.',
+        'Testar com outro roteador de teste para ver se a internet volta.',
+        'Revisar todos os cabos de rede e conectores dentro da casa do cliente.'
     ],
     'ping_instavel': [
-        'Limpar o conector da fibra na ONU com kit de limpeza e reencaixar firme.',
-        'Inspecionar o percurso do cabo de fibra interno — dobra fechada, cabo preso em porta ou objeto em cima já causa isso.',
-        'Verificar se o cabo de rede entre a ONU e o roteador está danificado ou com conector amassado.',
-        'Testar conectar notebook direto na ONU (sem roteador) e refazer o ping — descarta problema no roteador do cliente.',
-        'Substituir cabo de rede se estiver danificado.',
-        'Testar trocar a ONU por uma reserva — se a instabilidade sumir, era a ONU com defeito.',
-        'Verificar se o roteador do cliente está superaquecendo ou com fonte instável.',
+        'Limpar o conector do cabo de fibra que entra no aparelho (ONU) e encaixar bem firme.',
+        'Olhar o cabo de fibra dentro de casa: ver se não está preso sob portas, dobrado ou sob móveis.',
+        'Verificar se o cabo de rede entre o aparelho da fibra e o roteador está amassado ou com a trava quebrada.',
+        'Ligar um notebook com cabo direto no aparelho da fibra (ONU) e refazer o teste para testar sem o roteador.',
+        'Substituir o cabo de rede se estiver com defeito.',
+        'Colocar um aparelho de fibra (ONU) de teste para descartar defeito no equipamento atual.',
+        'Verificar se o roteador do cliente está esquentando muito ou com a fonte falhando.'
     ],
 
     'tracert_instavel': [
-        'Limpar e reencaixar conector da fibra na ONU antes de qualquer outra coisa.',
-        'Inspecionar a fibra interna da residência em busca de dobras, emendas improvisadas ou trechos esmagados.',
-        'Testar trocar a ONU por uma reserva e refazer o tracert para comparar.',
-        'Verificar se o cabo de rede entre ONU e roteador está íntegro — substituir se necessário.',
-        'Testar conectar notebook direto na ONU e refazer o tracert — descarta problema no roteador do cliente.',
+        'Desconectar, limpar e reencaixar o cabo de fibra no aparelho (ONU) do cliente.',
+        'Procurar por dobras apertadas, emendas ruins ou partes amassadas no cabo de fibra dentro da residência.',
+        'Trocar o aparelho de fibra (ONU) por um de teste para ver se o problema é nele.',
+        'Substituir o cabo de rede que liga o aparelho de fibra ao roteador se estiver com mau contato.',
+        'Ligar um notebook direto no aparelho da fibra (ONU) para testar a rota sem passar pelo roteador.'
     ],
     'oscilacao': [
-        'Medir potência da fibra e corrigir se estiver fora do ideal.',
-        'Testar estabilidade conectando um dispositivo diretamente na ONU.',
-        'Verificar interferências no ambiente do roteador (micro-ondas, paredes, eletrodomésticos).',
-        'Substituir roteador com problema de queda de Wi-Fi ou instabilidade.'
+        'Medir a força do sinal da fibra e ajustar se estiver muito fraco ou fora do padrão.',
+        'Conectar um aparelho de teste direto na ONU para ver se a oscilação continua no cabo.',
+        'Verificar se o roteador está muito perto de aparelhos que causam interferência (micro-ondas, telefones sem fio, etc.).',
+        'Substituir o roteador se o sinal do Wi-Fi estiver caindo sozinho.'
     ],
     'queda': [
-        'Verificar fonte, cabo de energia e tomadas frouxas.',
-        'Revisar cabos internos e conectores.',
-        'Substituir equipamentos defeituosos.'
+        'Verificar se a tomada está frouxa, se a fonte de energia está quente demais ou com mau contato.',
+        'Revisar todos os cabos internos e conectores da internet.',
+        'Substituir os aparelhos (ONU ou roteador) se continuarem desligando sozinhos.'
     ],
     'roteador': [
-        'Testar equipamento com outro roteador para confirmar falha.',
-        'Verificar superaquecimento, LEDs anormais e ruídos.',
-        'Conferir fonte e substituir se houver instabilidade.',
-        'Substituir roteador se confirmado defeito.'
+        'Colocar um roteador de teste no lugar para confirmar se o do cliente está com defeito.',
+        'Verificar se as luzes do roteador piscam normal, se ele esquenta muito ou faz barulhos estranhos.',
+        'Testar a fonte de energia em outra tomada ou colocar outra fonte compatível para teste.',
+        'Trocar o roteador se for confirmado o defeito.'
     ],
     'sinal_optico': [
-        'Testar potência óptica na CTO e na fibra interna.',
-        'Recolocar ou substituir conectores.',
-        'Corrigir microdobras ou refazer trechos danificados.',
-        'Refazer fusão se necessário.',
-        'Verificar se há rompimento parcial no cabo interno ou externo.'
+        'Medir o sinal que sai da caixa da rua e o que chega no aparelho da casa do cliente.',
+        'Refazer as pontas (conectores) do cabo de fibra que estão com sinal ruim.',
+        'Ajustar o cabo para tirar dobras apertadas ou partes esmagadas.',
+        'Refazer a emenda de solda da fibra (fusão) se estiver com sinal muito fraco.',
+        'Verificar se o cabo de fibra da rua ou de dentro da casa está quebrado em algum ponto.'
     ],
     // RADIO SOLUTIONS
     'radio_lento_oscilando': [
-        'Revisar apontamento da antena (CCQ baixo).',
-        'Trocar o cabo de rede para teste.',
-        'Trocar a fonte de alimentação (POE).',
-        'Verificar se há obstruções novas (árvores, construções).'
+        'Ajustar a direção da antena no telhado para melhorar a recepção do sinal.',
+        'Trocar o cabo de rede que desce da antena para o roteador.',
+        'Trocar a fonte de energia preta que liga a antena na tomada (fonte POE).',
+        'Verificar se cresceram árvores novas ou se construíram algo na direção da antena que esteja tampando o sinal.'
     ],
     'radio_sem_servico': [
-        'Trocar a fonte de alimentação (POE).',
-        'Trocar o cabo de rede.',
-        'Testar com outro equipamento de rádio.',
-        'Verificar se a antena desconfigurou ou queimou.'
-    ],
+        'Trocar a fonte de energia preta que liga a antena na tomada (fonte POE).',
+        'Trocar o cabo de rede que desce da antena.',
+        'Testar trocando a antena externa por outra no lugar.',
+        'Verificar se a antena desconfigurou ou se queimou por causa de raio ou queda de energia.'
+    ]
 };
 
 let currentStep = 1;
@@ -206,7 +206,8 @@ function showStep(n) {
 
     // Update Buttons
     prevBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
-    nextBtn.textContent = n === 4 ? 'Finalizar' : 'Próximo';
+    nextBtn.style.display = n === 4 ? 'none' : '';
+    nextBtn.textContent = 'Próximo';
 
     if (n === 4) {
         generateNote();
