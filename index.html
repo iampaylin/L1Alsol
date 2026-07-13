@@ -108,21 +108,21 @@
                                 cliente</label>
                             <div class="radio-group-container">
                                 <!-- Fibra Msg -->
-                                <div class="radio-group type-fibra" id="fibra-msg">
-                                    <label><input type="radio" name="fibra-msg" value="SEM SERVIÇO" checked> Sem
-                                        Serviço</label>
-                                    <label><input type="radio" name="fibra-msg" value="SERVIÇO COM INSTABILIDADE">
-                                        Instabilidade</label>
-                                    <label><input type="radio" name="fibra-msg" value="OUTRO"> Outro</label>
-                                </div>
+                                <select id="fibra-msg" class="type-fibra">
+                                    <option value="SEM SERVIÇO" selected>Sem Serviço</option>
+                                    <option value="SERVIÇO COM INSTABILIDADE">Instabilidade</option>
+                                    <option value="CONFIGURAÇÃO DE ROTEADOR / WIFI">Configuração de roteador / wifi</option>
+                                    <option value="REPARO">Reparo</option>
+                                    <option value="OUTRO">Outro</option>
+                                </select>
                                 <!-- Radio Msg -->
-                                <div class="radio-group type-radio" id="radio-msg" style="display: none;">
-                                    <label><input type="radio" name="radio-msg" value="SEM SERVIÇO" checked> Sem
-                                        Serviço</label>
-                                    <label><input type="radio" name="radio-msg" value="SERVIÇO COM INSTABILIDADE">
-                                        Instabilidade</label>
-                                    <label><input type="radio" name="radio-msg" value="OUTRO"> Outro</label>
-                                </div>
+                                <select id="radio-msg" class="type-radio" style="display: none;">
+                                    <option value="SEM SERVIÇO" selected>Sem Serviço</option>
+                                    <option value="SERVIÇO COM INSTABILIDADE">Instabilidade</option>
+                                    <option value="CONFIGURAÇÃO DE ROTEADOR / WIFI">Configuração de roteador / wifi</option>
+                                    <option value="REPARO">Reparo</option>
+                                    <option value="OUTRO">Outro</option>
+                                </select>
                             </div>
                         </div>
 
@@ -273,7 +273,13 @@
                             <div class="checkbox-group horizontal">
                                 <label><input type="checkbox" id="check-reiniciado"> Reiniciado equip.</label>
                                 <label><input type="checkbox" id="check-config"> Config. roteador</label>
-                                <label><input type="checkbox" id="check-doc"> Verif. documentação</label>
+                            </div>
+                        </div>
+                        <div class="input-group full-width">
+                            <label><span class="material-symbols-rounded label-icon">folder_open</span>Documentação</label>
+                            <div class="radio-group" id="doc-status-group">
+                                <label><input type="radio" name="doc-status" id="check-doc-possui"> Possui documentação</label>
+                                <label><input type="radio" name="doc-status" id="check-doc-nao"> Não possui documentação</label>
                             </div>
                         </div>
                     </div>

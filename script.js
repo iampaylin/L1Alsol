@@ -327,7 +327,11 @@ function generateFibraNote() {
     const checklistItems = [];
     if (getCheckboxState('check-reiniciado')) checklistItems.push('[x] Reiniciado equipamentos');
     if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador no padrão Alsol');
-    if (getCheckboxState('check-doc')) checklistItems.push('[x] Verificado documentação do cliente');
+
+    let observacaoDoc = '';
+    if (getCheckboxState('check-doc-nao')) {
+        observacaoDoc = '\n\nOBSERVAÇÃO\nCliente sem documentação, ligar para documentar com a central';
+    }
 
     // Alarm checkboxes (no more Sim/Não radio)
     const activeAlarms = [];
@@ -372,7 +376,7 @@ CONEXÃO
 - Sinal Cliente: ${sinalCliente ? sinalCliente + ' dBm' : '-'} | CTO: ${sinalCTO ? sinalCTO + ' dBm' : '-'}
 
 RELATO DO PROBLEMA
-${problema || '-'}${acoesNivel1}${solucoesBlock}`;
+${problema || '-'}${acoesNivel1}${solucoesBlock}${observacaoDoc}`;
 }
 
 
@@ -390,6 +394,11 @@ function generateRadioNote() {
     const checklistItems = [];
     if (getCheckboxState('check-reiniciado')) checklistItems.push('[x] Reiniciado equipamentos');
     if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador');
+
+    let observacaoDoc = '';
+    if (getCheckboxState('check-doc-nao')) {
+        observacaoDoc = '\n\nOBSERVAÇÃO\nCliente sem documentação, ligar para documentar com a central';
+    }
 
     // Solutions Block
     let solucoesBlock = '';
@@ -425,12 +434,12 @@ CONEXÃO (RÁDIO)
 - Vinculado: ${vinculado}
 
 RELATO DO PROBLEMA
-${problema || '-'}${acoesNivel1}${solucoesBlock}`;
+${problema || '-'}${acoesNivel1}${solucoesBlock}${observacaoDoc}`;
 }
 
 function generateSecondaryOutput(type) {
     const msgField = type === 'fibra' ? 'fibra-msg' : 'radio-msg';
-    const msgCliente = getRadioValue(msgField);
+    const msgCliente = getValue(msgField);
     const nome = getValue('common-nome');
     const contato = getValue('common-contato');
     const relato = getValue('common-problema');
@@ -588,20 +597,27 @@ function copyToClipboard(elementId, buttonId) {
             // Check each option
             const semServico = block.match(/(\([^)]*\))\s*SEM\s+SERVI[ÇC]O/i);
             const instabilidade = block.match(/(\([^)]*\))\s*SERVI[ÇC]O\s+COM\s+INSTABILIDADE/i);
+            const configWifi = block.match(/(\([^)]*\))\s*CONFIGURA[ÇC][ÃA]O\s+DE\s+ROTEADOR\s*\/\s*WIFI/i);
+            const reparo = block.match(/(\([^)]*\))\s*REPARO/i);
             const outro = block.match(/(\([^)]*\))\s*OUTRO/i);
 
             if (semServico && isChecked(semServico[1])) {
                 msgValue = 'SEM SERVIÇO';
             } else if (instabilidade && isChecked(instabilidade[1])) {
                 msgValue = 'SERVIÇO COM INSTABILIDADE';
+            } else if (configWifi && isChecked(configWifi[1])) {
+                msgValue = 'CONFIGURAÇÃO DE ROTEADOR / WIFI';
+            } else if (reparo && isChecked(reparo[1])) {
+                msgValue = 'REPARO';
             } else if (outro && isChecked(outro[1])) {
                 msgValue = 'OUTRO';
             }
 
             if (msgValue) {
                 const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
-                const radioName = activeTab === 'radio' ? 'radio-msg' : 'fibra-msg';
-                setRadio(radioName, msgValue);
+                const selectId = activeTab === 'radio' ? 'radio-msg' : 'fibra-msg';
+                const el = document.getElementById(selectId);
+                if (el) el.value = msgValue;
             }
         }
 
