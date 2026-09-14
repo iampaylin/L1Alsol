@@ -1,4 +1,4 @@
-// Solutions Data (Instruções simplificadas para os técnicos)
+/* Solutions Data (Instruções simplificadas para os técnicos)
 const SOLUTIONS = {
     'lentidao': [
         'Verificar se o cabo de fibra está dobrado, prensado ou quebrado (olhar todo o caminho da fibra).',
@@ -70,7 +70,7 @@ const SOLUTIONS = {
         'Testar trocando a antena externa por outra no lugar.',
         'Verificar se a antena desconfigurou ou se queimou por causa de raio ou queda de energia.'
     ]
-};
+}; */
 
 let currentStep = 1;
 

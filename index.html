@@ -103,7 +103,8 @@
                                 <select id="fibra-msg" class="type-fibra">
                                     <option value="SEM SERVIÇO" selected>Sem Serviço</option>
                                     <option value="SERVIÇO COM INSTABILIDADE">Instabilidade</option>
-                                    <option value="CONFIGURAÇÃO DE ROTEADOR / WIFI">Configuração de roteador / wifi</option>
+                                    <option value="CONFIGURAÇÃO DE ROTEADOR / WIFI">Configuração de roteador / wifi
+                                    </option>
                                     <option value="REPARO">Reparo</option>
                                     <option value="OUTRO">Outro</option>
                                 </select>
@@ -111,7 +112,8 @@
                                 <select id="radio-msg" class="type-radio" style="display: none;">
                                     <option value="SEM SERVIÇO" selected>Sem Serviço</option>
                                     <option value="SERVIÇO COM INSTABILIDADE">Instabilidade</option>
-                                    <option value="CONFIGURAÇÃO DE ROTEADOR / WIFI">Configuração de roteador / wifi</option>
+                                    <option value="CONFIGURAÇÃO DE ROTEADOR / WIFI">Configuração de roteador / wifi
+                                    </option>
                                     <option value="REPARO">Reparo</option>
                                     <option value="OUTRO">Outro</option>
                                 </select>
@@ -186,7 +188,7 @@
                                 <label><input type="checkbox" id="DYINGGASP"> DYING GASP</label>
                             </div>
                         </div>
-                        <div class="input-group full-width">
+                        <!--  <div class="input-group full-width">
                             <label><span class="material-symbols-rounded label-icon">troubleshoot</span>Diagnóstico
                                 Principal</label>
                             <select id="fibra-diagnostico">
@@ -200,7 +202,7 @@
                                 <option value="roteador">Problema no roteador</option>
                                 <option value="sinal_optico">Sinal óptico baixo</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- RADIO DATA -->
@@ -234,7 +236,7 @@
                                 <label><input type="radio" name="radio-vinculado" value="NÃO"> Não</label>
                             </div>
                         </div>
-                        <div class="input-group full-width">
+                        <!-- <div class="input-group full-width">
                             <label><span class="material-symbols-rounded label-icon">troubleshoot</span>Diagnóstico
                                 Principal</label>
                             <select id="radio-diagnostico">
@@ -242,7 +244,7 @@
                                 <option value="radio_lento_oscilando">Lentidão / Oscilação</option>
                                 <option value="radio_sem_servico">Sem serviço / Queda</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -257,7 +259,8 @@
                                 <span class="quick-desc-tag">Sem conexão, LAN sem fios</span>
                                 <span class="quick-desc-tag">Sem conexão, ONU DYING GASP</span>
                             </div>
-                            <textarea id="common-problema" rows="2" placeholder="Descreva o problema..."></textarea>
+                            <textarea id="common-problema" rows="2"
+                                placeholder="Descreva o problema e as ações para o técnico..."></textarea>
                         </div>
                         <div class="input-group full-width">
                             <label><span class="material-symbols-rounded label-icon">checklist</span>Ações Realizadas
@@ -268,10 +271,13 @@
                             </div>
                         </div>
                         <div class="input-group full-width">
-                            <label><span class="material-symbols-rounded label-icon">folder_open</span>Documentação</label>
+                            <label><span
+                                    class="material-symbols-rounded label-icon">folder_open</span>Documentação</label>
                             <div class="radio-group" id="doc-status-group">
-                                <label><input type="radio" name="doc-status" id="check-doc-possui"> Possui documentação</label>
-                                <label><input type="radio" name="doc-status" id="check-doc-nao"> Não possui documentação</label>
+                                <label><input type="radio" name="doc-status" id="check-doc-possui"> Possui
+                                    documentação</label>
+                                <label><input type="radio" name="doc-status" id="check-doc-nao"> Não possui
+                                    documentação</label>
                             </div>
                         </div>
                     </div>
