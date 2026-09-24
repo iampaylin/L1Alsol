@@ -1,47 +1,26 @@
-/* Solutions Data (Instruções simplificadas para os técnicos)
 const SOLUTIONS = {
     'lentidao': [
-        'Verificar se o cabo de fibra está dobrado, prensado ou quebrado (olhar todo o caminho da fibra).',
-        'Verificar se os conectores da fibra estão bem encaixados ou se precisam ser refeitos.',
-        'Testar a internet ligando um computador com cabo direto no aparelho da fibra (ONU).',
-        'Medir a força do sinal da fibra no aparelho do cliente e na caixa da rua.',
         'Testar se o roteador do cliente está muito quente, travando ou com mau contato na energia.',
         'Trocar o cabo de rede que liga o roteador ao aparelho da internet se estiver velho ou quebrado.',
-        'Reiniciar, configurar do zero ou trocar o roteador se continuar ruim.'
+        'Atualizar, configurar do zero ou trocar o roteador se continuar ruim.',
+        'Realizar teste de ping e banda.'
     ],
     'sem_conexao': [
         'Medir o sinal da fibra na caixa de atendimento na rua e na casa do cliente.',
         'Procurar por rompimento no cabo ou problemas nas emendas da fibra.',
-        'Testar outra ONU para ver se a atual queimou ou estragou.',
-        'Testar com outro roteador de teste para ver se a internet volta.',
-        'Revisar todos os cabos de rede e conectores dentro da casa do cliente.'
-    ],
-    'ping_instavel': [
-        'Limpar o conector do cabo de fibra que entra no aparelho (ONU) e encaixar bem firme.',
-        'Olhar o cabo de fibra dentro de casa: ver se não está preso sob portas, dobrado ou sob móveis.',
-        'Verificar se o cabo de rede entre o aparelho da fibra e o roteador está amassado ou com a trava quebrada.',
-        'Ligar um notebook com cabo direto no aparelho da fibra (ONU) e refazer o teste para testar sem o roteador.',
-        'Substituir o cabo de rede se estiver com defeito.',
-        'Colocar um aparelho de fibra (ONU) de teste para descartar defeito no equipamento atual.',
-        'Verificar se o roteador do cliente está esquentando muito ou com a fonte falhando.'
-    ],
-
-    'tracert_instavel': [
-        'Desconectar, limpar e reencaixar o cabo de fibra no aparelho (ONU) do cliente.',
-        'Procurar por dobras apertadas, emendas ruins ou partes amassadas no cabo de fibra dentro da residência.',
-        'Trocar o aparelho de fibra (ONU) por um de teste para ver se o problema é nele.',
-        'Substituir o cabo de rede que liga o aparelho de fibra ao roteador se estiver com mau contato.',
-        'Ligar um notebook direto no aparelho da fibra (ONU) para testar a rota sem passar pelo roteador.'
+        'Checar integridade dos equipamentos.',
+        'Revisar todos os cabos de rede e conectores dentro da casa do cliente.',
+        'Verificar fonte de alimentação e adaptadores.'
     ],
     'oscilacao': [
         'Medir a força do sinal da fibra e ajustar se estiver muito fraco ou fora do padrão.',
         'Conectar um aparelho de teste direto na ONU para ver se a oscilação continua no cabo.',
         'Verificar se o roteador está muito perto de aparelhos que causam interferência (micro-ondas, telefones sem fio, etc.).',
-        'Substituir o roteador se o sinal do Wi-Fi estiver caindo sozinho.'
+        'Verificar potência do sinal wifi em todos os cômodos.'
     ],
-    'queda': [
+    'queda_de_conexao': [
         'Verificar se a tomada está frouxa, se a fonte de energia está quente demais ou com mau contato.',
-        'Revisar todos os cabos internos e conectores da internet.',
+        'Revisar todos os cabos de rede e conectores dentro da casa do cliente.',
         'Substituir os aparelhos (ONU ou roteador) se continuarem desligando sozinhos.'
     ],
     'roteador': [
@@ -54,23 +33,21 @@ const SOLUTIONS = {
         'Medir o sinal que sai da caixa da rua e o que chega no aparelho da casa do cliente.',
         'Refazer as pontas (conectores) do cabo de fibra que estão com sinal ruim.',
         'Ajustar o cabo para tirar dobras apertadas ou partes esmagadas.',
-        'Refazer a emenda de solda da fibra (fusão) se estiver com sinal muito fraco.',
-        'Verificar se o cabo de fibra da rua ou de dentro da casa está quebrado em algum ponto.'
+
     ],
     // RADIO SOLUTIONS
     'radio_lento_oscilando': [
         'Ajustar a direção da antena no telhado para melhorar a recepção do sinal.',
-        'Trocar o cabo de rede que desce da antena para o roteador.',
         'Trocar a fonte de energia preta que liga a antena na tomada (fonte POE).',
         'Verificar se cresceram árvores novas ou se construíram algo na direção da antena que esteja tampando o sinal.'
     ],
     'radio_sem_servico': [
-        'Trocar a fonte de energia preta que liga a antena na tomada (fonte POE).',
-        'Trocar o cabo de rede que desce da antena.',
-        'Testar trocando a antena externa por outra no lugar.',
+        'Verificar fonte de alimentação e adaptadores (fonte POE).',
+        'Verificar cabos e conectores.',
+        'Checar integridade dos equipamentos.',
         'Verificar se a antena desconfigurou ou se queimou por causa de raio ou queda de energia.'
     ]
-}; */
+}
 
 let currentStep = 1;
 
@@ -327,6 +304,8 @@ function generateFibraNote() {
     const checklistItems = [];
     if (getCheckboxState('check-reiniciado')) checklistItems.push('[x] Reiniciado equipamentos');
     if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador no padrão Alsol');
+    if (getCheckboxState('check-os')) checklistItems.push('[x] Realizada abertura da ordem de serviço');
+    if (getCheckboxState('check-ping')) checklistItems.push('[x] Realizado teste de ping');
 
     let observacaoDoc = '';
     if (getCheckboxState('check-doc-nao')) {
@@ -394,6 +373,8 @@ function generateRadioNote() {
     const checklistItems = [];
     if (getCheckboxState('check-reiniciado')) checklistItems.push('[x] Reiniciado equipamentos');
     if (getCheckboxState('check-config')) checklistItems.push('[x] Configurado roteador');
+    if (getCheckboxState('check-os')) checklistItems.push('[x] Realizada abertura da ordem de serviço');
+    if (getCheckboxState('check-ping')) checklistItems.push('[x] Realizado teste de ping');
 
     let observacaoDoc = '';
     if (getCheckboxState('check-doc-nao')) {
