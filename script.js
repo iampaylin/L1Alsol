@@ -1,38 +1,45 @@
 const SOLUTIONS = {
     'lentidao': [
-        'Testar se o roteador do cliente está muito quente, travando ou com mau contato na energia.',
-        'Trocar o cabo de rede que liga o roteador ao aparelho da internet se estiver velho ou quebrado.',
-        'Atualizar, configurar do zero ou trocar o roteador se continuar ruim.',
-        'Realizar teste de ping e banda.'
+        'Conferir a integridade dos equipamentos, fibra óptica, cabos e conectores.',
+        'Realizar testes de velocidade e ping.',
+        'Verificar se a lentidão ocorre em todos os dispositivos ou somente em um',
+        'Verificar a potência do sinal óptico.',
+        'Realizar testes de conexão junto ao cliente.'
     ],
     'sem_conexao': [
-        'Medir o sinal da fibra na caixa de atendimento na rua e na casa do cliente.',
-        'Procurar por rompimento no cabo ou problemas nas emendas da fibra.',
-        'Checar integridade dos equipamentos.',
-        'Revisar todos os cabos de rede e conectores dentro da casa do cliente.',
-        'Verificar fonte de alimentação e adaptadores.'
+        'Conferir a integridade dos equipamentos, fibra óptica, cabos e conectores.',
+        'Medir a potência do sinal óptico na caixa de atendimento e na residência do cliente.',
+        'Verificar possíveis rompimentos, danos ou problemas nas emendas da fibra.',
+        'Conferir fontes de alimentação e funcionamento dos equipamentos.',
+        'Testar a conexão após os procedimentos realizados.'
     ],
     'oscilacao': [
-        'Medir a força do sinal da fibra e ajustar se estiver muito fraco ou fora do padrão.',
-        'Conectar um aparelho de teste direto na ONU para ver se a oscilação continua no cabo.',
-        'Verificar se o roteador está muito perto de aparelhos que causam interferência (micro-ondas, telefones sem fio, etc.).',
-        'Verificar potência do sinal wifi em todos os cômodos.'
+        'Medir a potência do sinal óptico e verificar se está dentro dos padrões recomendados.',
+        'Realizar testes de ping para identificar variações de latência e perda de pacotes.',
+        'Conectar um equipamento diretamente ao roteador via cabo para verificar se a instabilidade também ocorre na conexão cabeada.',
+        'Verificar possíveis fontes de interferência próximas ao roteador (micro-ondas, telefones sem fio, entre outros).',
+        'Verificar a intensidade e estabilidade do sinal Wi-Fi nos cômodos da residência.'
     ],
     'queda_de_conexao': [
-        'Verificar se a tomada está frouxa, se a fonte de energia está quente demais ou com mau contato.',
-        'Revisar todos os cabos de rede e conectores dentro da casa do cliente.',
-        'Substituir os aparelhos (ONU ou roteador) se continuarem desligando sozinhos.'
+        'Verificar tomadas, fontes de alimentação e possíveis problemas de energia ou mau contato.',
+        'Revisar os cabos de rede, fibra óptica e conectores dentro da residência.',
+        'Verificar se a ONU ou o roteador estão reiniciando ou desligando sozinhos.',
+        'Medir a potência do sinal óptico e verificar se está dentro dos parâmetros recomendados.',
+        'Substituir equipamentos ou fontes de alimentação que apresentem defeitos.'
     ],
     'roteador': [
-        'Colocar um roteador de teste no lugar para confirmar se o do cliente está com defeito.',
-        'Verificar se as luzes do roteador piscam normal, se ele esquenta muito ou faz barulhos estranhos.',
-        'Testar a fonte de energia em outra tomada ou colocar outra fonte compatível para teste.',
-        'Trocar o roteador se for confirmado o defeito.'
+        'Verificar o estado físico e o funcionamento do roteador.',
+        'Testar a fonte de alimentação e as conexões dos cabos.',
+        'Conferir as configurações de rede e o funcionamento do Wi-Fi.',
+        'Realizar testes com outro roteador para identificar possíveis falhas no equipamento.',
+        'Substituir o roteador ou a fonte caso seja confirmado o defeito.'
     ],
     'sinal_optico': [
-        'Medir o sinal que sai da caixa da rua e o que chega no aparelho da casa do cliente.',
-        'Refazer as pontas (conectores) do cabo de fibra que estão com sinal ruim.',
-        'Ajustar o cabo para tirar dobras apertadas ou partes esmagadas.',
+        'Medir a potência do sinal óptico na caixa de atendimento e na residência do cliente.',
+        'Verificar conectores e realizar a limpeza ou substituição dos conectores da fibra, se necessário.',
+        'Verificar possíveis rompimentos, dobras, esmagamentos ou danos na fibra.',
+        'Realizar os reparos necessários e medir novamente o sinal óptico.',
+        'Realizar a troca da fibra se necessário, caso apresente danos ou perda excessiva de sinal'
 
     ],
     // RADIO SOLUTIONS
@@ -42,7 +49,7 @@ const SOLUTIONS = {
         'Verificar se cresceram árvores novas ou se construíram algo na direção da antena que esteja tampando o sinal.'
     ],
     'radio_sem_servico': [
-        'Verificar fonte de alimentação e adaptadores (fonte POE).',
+        'Verificar fonte de alimentação e adaptadores (fonte PoE).',
         'Verificar cabos e conectores.',
         'Checar integridade dos equipamentos.',
         'Verificar se a antena desconfigurou ou se queimou por causa de raio ou queda de energia.'
